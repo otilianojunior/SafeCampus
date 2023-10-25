@@ -5,7 +5,8 @@
             "codigo": "20230000",
             "nome": "James Hetfield",
             "idade": 60,
-            "endereco": "Metallica",
+            "area": "vocalista",
+            "curso": "Metallica",
             "fotos": [
                 "src/assets/fotos/JamesHetfield.jpeg",
                 "src/assets/fotos/JamesHetfield1.jpeg",
@@ -15,8 +16,9 @@
         {
             "codigo": "20230001",
             "nome": "Kirk Hammett",
-            "idade": 23,
-            "endereco": "Metallica",
+            "area": "guitarrista",
+            "idade": 60,
+            "curso": "Metallica",
             "fotos": [
                 "src/assets/fotos/KirkHammett.jpeg",
                 "src/assets/fotos/KirkHammett1.jpeg",
@@ -26,8 +28,9 @@
         {
             "codigo": "20230002",
             "nome": "Lars Ulrich",
-            "idade": 23,
-            "endereco": "Metallica",
+            "idade": 59,
+            "area": "baterista",
+            "curso": "Metallica",
             "fotos": [
                 "src/assets/fotos/LarsUlrich.jpeg",
                 "src/assets/fotos/LarsUlrich1.jpeg",
@@ -37,8 +40,9 @@
         {
             "codigo": "20230003",
             "nome": "Robert Trujiilo",
-            "idade": 23,
-            "endereco": "Metallica",
+            "idade": 59,
+            "area": "baixista",
+            "curso": "Metallica",
             "fotos": [
                 "src/assets/fotos/RobertTrujiilo.jpeg",
                 "src/assets/fotos/RobertTrujiilo1.jpeg",
@@ -48,8 +52,9 @@
         {
             "codigo": "20230004",
             "nome": "Dave Murray",
-            "idade": 23,
-            "endereco": "Iron Maiden",
+            "idade": 66,
+            "area": "guitarrista",
+            "curso": "Iron Maiden",
             "fotos": [
                 "src/assets/fotos/DaveMurray.jpeg",
                 "src/assets/fotos/DaveMurray1.jpeg",
@@ -59,8 +64,9 @@
         {
             "codigo": "20230005",
             "nome": "Adrian Smith",
-            "idade": 23,
-            "endereco": "Iron Maiden",
+            "idade": 66,
+            "area": "guitarrista",
+            "curso": "Iron Maiden",
             "fotos": [
                 "src/assets/fotos/AdrianSmith.jpeg",
                 "src/assets/fotos/AdrianSmith1.jpeg",
@@ -70,8 +76,9 @@
         {
             "codigo": "20230006",
             "nome": "Bruce Dickinson",
-            "idade": 23,
-            "endereco": "Iron Maiden",
+            "idade": 65,
+            "area": "vocalista",
+            "curso": "Iron Maiden",
             "fotos": [
                 "src/assets/fotos/BruceDickinson.jpeg",
                 "src/assets/fotos/BruceDickinson1.jpeg",
@@ -81,8 +88,9 @@
         {
             "codigo": "20230007",
             "nome": "John Deacon",
-            "idade": 23,
-            "endereco": "Queen",
+            "idade": 72,
+            "area": "baixista",
+            "curso": "Queen",
             "fotos": [
                 "src/assets/fotos/JohnDeacon.jpeg",
                 "src/assets/fotos/JohnDeacon1.jpeg",
@@ -92,12 +100,157 @@
         {
             "codigo": "20230008",
             "nome": "Roger Taylor",
-            "idade": 23,
-            "endereco": "Queen",
+            "idade": 74,
+            "area": "baterista",
+            "curso": "Queen",
             "fotos": [
                 "src/assets/fotos/RogerTaylor.jpeg",
                 "src/assets/fotos/RogerTaylor1.jpeg",
                 "src/assets/fotos/RogerTaylor2.jpeg"
+            ]
+        }
+    ],
+    "servidores": [
+        {
+            "codigo": "0001",
+            "nome": "John Lennon",
+            "idade": 60,
+            "area": "",
+            "curso": "Beatles",
+            "fotos": [
+                "src/assets/fotos/JohnLennon.jpeg",
+                "src/assets/fotos/JohnLennon1.jpeg",
+                "src/assets/fotos/JohnLennon2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0002",
+            "nome": "Paul McCartney",
+            "idade": 60,
+            "area": "",
+            "curso": "Beatles",
+            "fotos": [
+                "src/assets/fotos/PaulMcCartney.jpeg",
+                "src/assets/fotos/PaulMcCartney1.jpeg",
+                "src/assets/fotos/PaulMcCartney2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0003",
+            "nome": "George Harrison",
+            "idade": 60,
+            "area": "",
+            "curso": "Beatles",
+            "fotos": [
+                "src/assets/fotos/GeorgeHarrison.jpeg",
+                "src/assets/fotos/GeorgeHarrison1.jpeg",
+                "src/assets/fotos/GeorgeHarrison2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0004",
+            "nome": "Ringo Star",
+            "idade": 60,
+            "area": "",
+            "curso": "Beatles",
+            "fotos": [
+                "src/assets/fotos/RingoStar.jpeg",
+                "src/assets/fotos/RingoStar1.jpeg",
+                "src/assets/fotos/RingoStar2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0005",
+            "nome": "Mick Jagger",
+            "idade": 60,
+            "area": "",
+            "curso": "Rolling Stones",
+            "fotos": [
+                "src/assets/fotos/MickJagger.jpeg",
+                "src/assets/fotos/MickJagger1.jpeg",
+                "src/assets/fotos/MickJagger2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0006",
+            "nome": "Keith Richards",
+            "idade": 60,
+            "area": "",
+            "curso": "Rolling Stones",
+            "fotos": [
+                "src/assets/fotos/KeithRichards.jpeg",
+                "src/assets/fotos/KeithRichards1.jpeg",
+                "src/assets/fotos/KeithRichards2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0007",
+            "nome": "Brian May",
+            "idade": 60,
+            "area": "",
+            "curso": "Queen",
+            "fotos": [
+                "src/assets/fotos/BrianMay.jpeg",
+                "src/assets/fotos/BrianMay1.jpeg",
+                "src/assets/fotos/BrianMay2.jpeg"
+            ]
+        },
+        {
+            "codigo": "0008",
+            "nome": "Freddie Mercury",
+            "idade": 60,
+            "area": "",
+            "curso": "Queen",
+            "fotos": [
+                "src/assets/fotos/FreddieMercury.jpeg",
+                "src/assets/fotos/FreddieMercury1.jpeg",
+                "src/assets/fotos/FreddieMercury2.jpeg"
+            ]
+        }
+    ],
+    "suspeitos": [
+        {
+            "codigo": "20231",
+            "nome": "Dan Reynolds",
+            "idade": 60,
+            "infracao": "Imagine Dragons",
+            "fotos": [
+                "src/assets/fotos/DanReynolds.jpeg",
+                "src/assets/fotos/DanReynolds1.jpeg",
+                "src/assets/fotos/DanReynolds2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20232",
+            "nome": "Daniel Wayne Sermon",
+            "idade": 60,
+            "infracao": "Imagine Dragons",
+            "fotos": [
+                "src/assets/fotos/DanielWayneSermon.jpeg",
+                "src/assets/fotos/DanielWayneSermon1.jpeg",
+                "src/assets/fotos/DanielWayneSermon2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20233",
+            "nome": "Daniel Platzman",
+            "idade": 60,
+            "infracao": "Imagine Dragons",
+            "fotos": [
+                "src/assets/fotos/DanielPlatzman.jpeg",
+                "src/assets/fotos/DanielPlatzman1.jpeg",
+                "src/assets/fotos/DanielPlatzman2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20234",
+            "nome": "Ben McKee",
+            "idade": 60,
+            "infracao": "Imagine Dragons",
+            "fotos": [
+                "src/assets/fotos/BenMcKee.jpeg",
+                "src/assets/fotos/BenMcKee1.jpeg",
+                "src/assets/fotos/BenMcKee2.jpeg"
             ]
         }
     ]
