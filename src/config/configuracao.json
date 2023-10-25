@@ -1,0 +1,104 @@
+{
+    "versao": "0.1",
+    "alunos": [
+        {
+            "codigo": "20230000",
+            "nome": "James Hetfield",
+            "idade": 60,
+            "endereco": "Metallica",
+            "fotos": [
+                "src/assets/fotos/JamesHetfield.jpeg",
+                "src/assets/fotos/JamesHetfield1.jpeg",
+                "src/assets/fotos/JamesHetfield2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230001",
+            "nome": "Kirk Hammett",
+            "idade": 23,
+            "endereco": "Metallica",
+            "fotos": [
+                "src/assets/fotos/KirkHammett.jpeg",
+                "src/assets/fotos/KirkHammett1.jpeg",
+                "src/assets/fotos/KirkHammett2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230002",
+            "nome": "Lars Ulrich",
+            "idade": 23,
+            "endereco": "Metallica",
+            "fotos": [
+                "src/assets/fotos/LarsUlrich.jpeg",
+                "src/assets/fotos/LarsUlrich1.jpeg",
+                "src/assets/fotos/LarsUlrich2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230003",
+            "nome": "Robert Trujiilo",
+            "idade": 23,
+            "endereco": "Metallica",
+            "fotos": [
+                "src/assets/fotos/RobertTrujiilo.jpeg",
+                "src/assets/fotos/RobertTrujiilo1.jpeg",
+                "src/assets/fotos/RobertTrujiilo2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230004",
+            "nome": "Dave Murray",
+            "idade": 23,
+            "endereco": "Iron Maiden",
+            "fotos": [
+                "src/assets/fotos/DaveMurray.jpeg",
+                "src/assets/fotos/DaveMurray1.jpeg",
+                "src/assets/fotos/DaveMurray2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230005",
+            "nome": "Adrian Smith",
+            "idade": 23,
+            "endereco": "Iron Maiden",
+            "fotos": [
+                "src/assets/fotos/AdrianSmith.jpeg",
+                "src/assets/fotos/AdrianSmith1.jpeg",
+                "src/assets/fotos/AdrianSmith2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230006",
+            "nome": "Bruce Dickinson",
+            "idade": 23,
+            "endereco": "Iron Maiden",
+            "fotos": [
+                "src/assets/fotos/BruceDickinson.jpeg",
+                "src/assets/fotos/BruceDickinson1.jpeg",
+                "src/assets/fotos/BruceDickinson2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230007",
+            "nome": "John Deacon",
+            "idade": 23,
+            "endereco": "Queen",
+            "fotos": [
+                "src/assets/fotos/JohnDeacon.jpeg",
+                "src/assets/fotos/JohnDeacon1.jpeg",
+                "src/assets/fotos/JohnDeacon2.jpeg"
+            ]
+        },
+        {
+            "codigo": "20230008",
+            "nome": "Roger Taylor",
+            "idade": 23,
+            "endereco": "Queen",
+            "fotos": [
+                "src/assets/fotos/RogerTaylor.jpeg",
+                "src/assets/fotos/RogerTaylor1.jpeg",
+                "src/assets/fotos/RogerTaylor2.jpeg"
+            ]
+        }
+    ]
+}
