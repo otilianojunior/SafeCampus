@@ -114,8 +114,8 @@
         {
             "codigo": "0001",
             "nome": "John Lennon",
-            "idade": 60,
-            "area": "",
+            "idade": 83,
+            "area": "cantor",
             "curso": "Beatles",
             "fotos": [
                 "src/assets/fotos/JohnLennon.jpeg",
@@ -126,8 +126,8 @@
         {
             "codigo": "0002",
             "nome": "Paul McCartney",
-            "idade": 60,
-            "area": "",
+            "idade": 81,
+            "area": "cantor",
             "curso": "Beatles",
             "fotos": [
                 "src/assets/fotos/PaulMcCartney.jpeg",
@@ -138,8 +138,8 @@
         {
             "codigo": "0003",
             "nome": "George Harrison",
-            "idade": 60,
-            "area": "",
+            "idade": 80,
+            "area": "guitarrista",
             "curso": "Beatles",
             "fotos": [
                 "src/assets/fotos/GeorgeHarrison.jpeg",
@@ -150,8 +150,8 @@
         {
             "codigo": "0004",
             "nome": "Ringo Star",
-            "idade": 60,
-            "area": "",
+            "idade": 83,
+            "area": "musico",
             "curso": "Beatles",
             "fotos": [
                 "src/assets/fotos/RingoStar.jpeg",
@@ -162,8 +162,8 @@
         {
             "codigo": "0005",
             "nome": "Mick Jagger",
-            "idade": 60,
-            "area": "",
+            "idade": 80,
+            "area": "vocalista",
             "curso": "Rolling Stones",
             "fotos": [
                 "src/assets/fotos/MickJagger.jpeg",
@@ -174,8 +174,8 @@
         {
             "codigo": "0006",
             "nome": "Keith Richards",
-            "idade": 60,
-            "area": "",
+            "idade": 79,
+            "area": "guitarrista",
             "curso": "Rolling Stones",
             "fotos": [
                 "src/assets/fotos/KeithRichards.jpeg",
@@ -186,8 +186,8 @@
         {
             "codigo": "0007",
             "nome": "Brian May",
-            "idade": 60,
-            "area": "",
+            "idade": 76,
+            "area": "guitarrista",
             "curso": "Queen",
             "fotos": [
                 "src/assets/fotos/BrianMay.jpeg",
@@ -198,8 +198,8 @@
         {
             "codigo": "0008",
             "nome": "Freddie Mercury",
-            "idade": 60,
-            "area": "",
+            "idade": 77,
+            "area": "vocalista",
             "curso": "Queen",
             "fotos": [
                 "src/assets/fotos/FreddieMercury.jpeg",
@@ -212,7 +212,7 @@
         {
             "codigo": "20231",
             "nome": "Dan Reynolds",
-            "idade": 60,
+            "idade": 36,
             "infracao": "Imagine Dragons",
             "fotos": [
                 "src/assets/fotos/DanReynolds.jpeg",
@@ -223,7 +223,7 @@
         {
             "codigo": "20232",
             "nome": "Daniel Wayne Sermon",
-            "idade": 60,
+            "idade": 39,
             "infracao": "Imagine Dragons",
             "fotos": [
                 "src/assets/fotos/DanielWayneSermon.jpeg",
@@ -234,7 +234,7 @@
         {
             "codigo": "20233",
             "nome": "Daniel Platzman",
-            "idade": 60,
+            "idade": 37,
             "infracao": "Imagine Dragons",
             "fotos": [
                 "src/assets/fotos/DanielPlatzman.jpeg",
@@ -245,7 +245,7 @@
         {
             "codigo": "20234",
             "nome": "Ben McKee",
-            "idade": 60,
+            "idade": 38,
             "infracao": "Imagine Dragons",
             "fotos": [
                 "src/assets/fotos/BenMcKee.jpeg",
