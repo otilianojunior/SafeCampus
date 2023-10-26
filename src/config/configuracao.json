@@ -7,10 +7,11 @@
             "idade": 60,
             "area": "vocalista",
             "curso": "Metallica",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/JamesHetfield.jpeg",
-                "src/assets/fotos/JamesHetfield1.jpeg",
-                "src/assets/fotos/JamesHetfield2.jpeg"
+                "src/assets/fotos/alunos/JamesHetfield.jpeg",
+                "src/assets/fotos/alunos/JamesHetfield1.jpeg",
+                "src/assets/fotos/alunos/JamesHetfield2.jpeg"
             ]
         },
         {
@@ -19,10 +20,11 @@
             "area": "guitarrista",
             "idade": 60,
             "curso": "Metallica",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/KirkHammett.jpeg",
-                "src/assets/fotos/KirkHammett1.jpeg",
-                "src/assets/fotos/KirkHammett2.jpeg"
+                "src/assets/fotos/alunos/KirkHammett.jpeg",
+                "src/assets/fotos/alunos/KirkHammett1.jpeg",
+                "src/assets/fotos/alunos/KirkHammett2.jpeg"
             ]
         },
         {
@@ -31,10 +33,11 @@
             "idade": 59,
             "area": "baterista",
             "curso": "Metallica",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/LarsUlrich.jpeg",
-                "src/assets/fotos/LarsUlrich1.jpeg",
-                "src/assets/fotos/LarsUlrich2.jpeg"
+                "src/assets/fotos/alunos/LarsUlrich.jpeg",
+                "src/assets/fotos/alunos/LarsUlrich1.jpeg",
+                "src/assets/fotos/alunos/LarsUlrich2.jpeg"
             ]
         },
         {
@@ -43,10 +46,11 @@
             "idade": 59,
             "area": "baixista",
             "curso": "Metallica",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/RobertTrujiilo.jpeg",
-                "src/assets/fotos/RobertTrujiilo1.jpeg",
-                "src/assets/fotos/RobertTrujiilo2.jpeg"
+                "src/assets/fotos/alunos/RobertTrujiilo.jpeg",
+                "src/assets/fotos/alunos/RobertTrujiilo1.jpeg",
+                "src/assets/fotos/alunos/RobertTrujiilo2.jpeg"
             ]
         },
         {
@@ -55,10 +59,11 @@
             "idade": 66,
             "area": "guitarrista",
             "curso": "Iron Maiden",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/DaveMurray.jpeg",
-                "src/assets/fotos/DaveMurray1.jpeg",
-                "src/assets/fotos/DaveMurray2.jpeg"
+                "src/assets/fotos/alunos/DaveMurray.jpeg",
+                "src/assets/fotos/alunos/DaveMurray1.jpeg",
+                "src/assets/fotos/alunos/DaveMurray2.jpeg"
             ]
         },
         {
@@ -67,10 +72,11 @@
             "idade": 66,
             "area": "guitarrista",
             "curso": "Iron Maiden",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/AdrianSmith.jpeg",
-                "src/assets/fotos/AdrianSmith1.jpeg",
-                "src/assets/fotos/AdrianSmith2.jpeg"
+                "src/assets/fotos/alunos/AdrianSmith.jpeg",
+                "src/assets/fotos/alunos/AdrianSmith1.jpeg",
+                "src/assets/fotos/alunos/AdrianSmith2.jpeg"
             ]
         },
         {
@@ -79,10 +85,11 @@
             "idade": 65,
             "area": "vocalista",
             "curso": "Iron Maiden",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/BruceDickinson.jpeg",
-                "src/assets/fotos/BruceDickinson1.jpeg",
-                "src/assets/fotos/BruceDickinson2.jpeg"
+                "src/assets/fotos/alunos/BruceDickinson.jpeg",
+                "src/assets/fotos/alunos/BruceDickinson1.jpeg",
+                "src/assets/fotos/alunos/BruceDickinson2.jpeg"
             ]
         },
         {
@@ -91,10 +98,11 @@
             "idade": 72,
             "area": "baixista",
             "curso": "Queen",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/JohnDeacon.jpeg",
-                "src/assets/fotos/JohnDeacon1.jpeg",
-                "src/assets/fotos/JohnDeacon2.jpeg"
+                "src/assets/fotos/alunos/JohnDeacon.jpeg",
+                "src/assets/fotos/alunos/JohnDeacon1.jpeg",
+                "src/assets/fotos/alunos/JohnDeacon2.jpeg"
             ]
         },
         {
@@ -103,10 +111,11 @@
             "idade": 74,
             "area": "baterista",
             "curso": "Queen",
+            "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/RogerTaylor.jpeg",
-                "src/assets/fotos/RogerTaylor1.jpeg",
-                "src/assets/fotos/RogerTaylor2.jpeg"
+                "src/assets/fotos/alunos/RogerTaylor.jpeg",
+                "src/assets/fotos/alunos/RogerTaylor1.jpeg",
+                "src/assets/fotos/alunos/RogerTaylor2.jpeg"
             ]
         }
     ],
@@ -117,10 +126,11 @@
             "idade": 83,
             "area": "cantor",
             "curso": "Beatles",
+            "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/JohnLennon.jpeg",
-                "src/assets/fotos/JohnLennon1.jpeg",
-                "src/assets/fotos/JohnLennon2.jpeg"
+                "src/assets/fotos/servidores/JohnLennon.jpeg",
+                "src/assets/fotos/servidores/JohnLennon1.jpeg",
+                "src/assets/fotos/servidores/JohnLennon2.jpeg"
             ]
         },
         {
@@ -129,10 +139,11 @@
             "idade": 81,
             "area": "cantor",
             "curso": "Beatles",
+            "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/PaulMcCartney.jpeg",
-                "src/assets/fotos/PaulMcCartney1.jpeg",
-                "src/assets/fotos/PaulMcCartney2.jpeg"
+                "src/assets/fotos/servidores/PaulMcCartney.jpeg",
+                "src/assets/fotos/servidores/PaulMcCartney1.jpeg",
+                "src/assets/fotos/servidores/PaulMcCartney2.jpeg"
             ]
         },
         {
@@ -141,10 +152,11 @@
             "idade": 80,
             "area": "guitarrista",
             "curso": "Beatles",
+            "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/GeorgeHarrison.jpeg",
-                "src/assets/fotos/GeorgeHarrison1.jpeg",
-                "src/assets/fotos/GeorgeHarrison2.jpeg"
+                "src/assets/fotos/servidores/GeorgeHarrison.jpeg",
+                "src/assets/fotos/servidores/GeorgeHarrison1.jpeg",
+                "src/assets/fotos/servidores/GeorgeHarrison2.jpeg"
             ]
         },
         {
@@ -153,10 +165,11 @@
             "idade": 83,
             "area": "musico",
             "curso": "Beatles",
+            "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/RingoStar.jpeg",
-                "src/assets/fotos/RingoStar1.jpeg",
-                "src/assets/fotos/RingoStar2.jpeg"
+                "src/assets/fotos/servidores/RingoStar.jpeg",
+                "src/assets/fotos/servidores/RingoStar1.jpeg",
+                "src/assets/fotos/servidores/RingoStar2.jpeg"
             ]
         },
         {
@@ -165,10 +178,11 @@
             "idade": 80,
             "area": "vocalista",
             "curso": "Rolling Stones",
+            "tipo": "Serviços Gerais",
             "fotos": [
-                "src/assets/fotos/MickJagger.jpeg",
-                "src/assets/fotos/MickJagger1.jpeg",
-                "src/assets/fotos/MickJagger2.jpeg"
+                "src/assets/fotos/servidores/MickJagger.jpeg",
+                "src/assets/fotos/servidores/MickJagger1.jpeg",
+                "src/assets/fotos/servidores/MickJagger2.jpeg"
             ]
         },
         {
@@ -177,10 +191,11 @@
             "idade": 79,
             "area": "guitarrista",
             "curso": "Rolling Stones",
+            "tipo": "Serviços Gerais",
             "fotos": [
-                "src/assets/fotos/KeithRichards.jpeg",
-                "src/assets/fotos/KeithRichards1.jpeg",
-                "src/assets/fotos/KeithRichards2.jpeg"
+                "src/assets/fotos/servidores/KeithRichards.jpeg",
+                "src/assets/fotos/servidores/KeithRichards1.jpeg",
+                "src/assets/fotos/servidores/KeithRichards2.jpeg"
             ]
         },
         {
@@ -189,10 +204,11 @@
             "idade": 76,
             "area": "guitarrista",
             "curso": "Queen",
+            "tipo": "Administrativo",
             "fotos": [
-                "src/assets/fotos/BrianMay.jpeg",
-                "src/assets/fotos/BrianMay1.jpeg",
-                "src/assets/fotos/BrianMay2.jpeg"
+                "src/assets/fotos/servidores/BrianMay.jpeg",
+                "src/assets/fotos/servidores/BrianMay1.jpeg",
+                "src/assets/fotos/servidores/BrianMay2.jpeg"
             ]
         },
         {
@@ -201,10 +217,11 @@
             "idade": 77,
             "area": "vocalista",
             "curso": "Queen",
+            "tipo": "Administrativo",
             "fotos": [
-                "src/assets/fotos/FreddieMercury.jpeg",
-                "src/assets/fotos/FreddieMercury1.jpeg",
-                "src/assets/fotos/FreddieMercury2.jpeg"
+                "src/assets/fotos/servidores/FreddieMercury.jpeg",
+                "src/assets/fotos/servidores/FreddieMercury1.jpeg",
+                "src/assets/fotos/servidores/FreddieMercury2.jpeg"
             ]
         }
     ],
@@ -215,9 +232,9 @@
             "idade": 36,
             "infracao": "Imagine Dragons",
             "fotos": [
-                "src/assets/fotos/DanReynolds.jpeg",
-                "src/assets/fotos/DanReynolds1.jpeg",
-                "src/assets/fotos/DanReynolds2.jpeg"
+                "src/assets/fotos/suspeitos/DanReynolds.jpeg",
+                "src/assets/fotos/suspeitos/DanReynolds1.jpeg",
+                "src/assets/fotos/suspeitos/DanReynolds2.jpeg"
             ]
         },
         {
@@ -226,9 +243,9 @@
             "idade": 39,
             "infracao": "Imagine Dragons",
             "fotos": [
-                "src/assets/fotos/DanielWayneSermon.jpeg",
-                "src/assets/fotos/DanielWayneSermon1.jpeg",
-                "src/assets/fotos/DanielWayneSermon2.jpeg"
+                "src/assets/fotos/suspeitos/DanielWayneSermon.jpeg",
+                "src/assets/fotos/suspeitos/DanielWayneSermon1.jpeg",
+                "src/assets/fotos/suspeitos/DanielWayneSermon2.jpeg"
             ]
         },
         {
@@ -237,9 +254,9 @@
             "idade": 37,
             "infracao": "Imagine Dragons",
             "fotos": [
-                "src/assets/fotos/DanielPlatzman.jpeg",
-                "src/assets/fotos/DanielPlatzman1.jpeg",
-                "src/assets/fotos/DanielPlatzman2.jpeg"
+                "src/assets/fotos/suspeitos/DanielPlatzman.jpeg",
+                "src/assets/fotos/suspeitos/DanielPlatzman1.jpeg",
+                "src/assets/fotos/suspeitos/DanielPlatzman2.jpeg"
             ]
         },
         {
@@ -248,9 +265,9 @@
             "idade": 38,
             "infracao": "Imagine Dragons",
             "fotos": [
-                "src/assets/fotos/BenMcKee.jpeg",
-                "src/assets/fotos/BenMcKee1.jpeg",
-                "src/assets/fotos/BenMcKee2.jpeg"
+                "src/assets/fotos/suspeitos/BenMcKee.jpeg",
+                "src/assets/fotos/suspeitos/BenMcKee1.jpeg",
+                "src/assets/fotos/suspeitos/BenMcKee2.jpeg"
             ]
         }
     ]
