@@ -17,6 +17,23 @@ class GateSecuritySystem:
         self.FOTOS_SUSPEITOS = None
         self.FOTOS_SERVIDORES = None
 
+    def main(self):
+        try:
+            self.load_config()
+            self.load_fotos_gate()
+            self.load_fotos_alunos()
+            self.load_fotos_servidores()
+            self.load_fotos_suspeitos()
+
+            visitante = self.simular_entrada()
+            alunos_reconhecidos = self.reconhecer_alunos(visitante)
+            servidores_reconhecidos = self.reconhecer_servidores(visitante)
+            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante)
+
+            self.imprimir_resultados(visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
+        except Exception as ex:
+            raise Exception("Erro: em GateSecurity System", ex)
+
     def load_config(self):
         try:
             json_util = JsonUtil(self.ARQUIVO_CONFIGURACAO)
@@ -209,20 +226,7 @@ class GateSecuritySystem:
 
 
 if __name__ == '__main__':
-    GATE = GateSecuritySystem()
-    GATE.load_config()
-    GATE.load_fotos_gate()
-    GATE.load_fotos_alunos()
-    GATE.load_fotos_servidores()
-    GATE.load_fotos_suspeitos()
+    SafeCampus = GateSecuritySystem()
+    SafeCampus.main()
 
-    # Simulação de entrada de um visitante
-    visitante = GATE.simular_entrada()
 
-    # Realizar o reconhecimento
-    alunos_reconhecidos = GATE.reconhecer_alunos(visitante)
-    servidores_reconhecidos = GATE.reconhecer_servidores(visitante)
-    suspeitos_reconhecidos = GATE.reconhecer_suspeitos(visitante)
-
-    # Imprimir os resultados
-    GATE.imprimir_resultados(visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
