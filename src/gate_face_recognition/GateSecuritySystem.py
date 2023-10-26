@@ -1,9 +1,8 @@
-import os
 import colored
 import secrets
 import random
 import simpy
-import face_recognition as reconhecedor
+import face_recognition as facerec
 from src.util.JsonUtil import JsonUtil
 from src.util.FotosUtil import FotosUtil
 from src.config.Configuration import Configuration
@@ -11,18 +10,19 @@ from src.config.Configuration import Configuration
 
 class GateSecuritySystem:
     def __init__(self):
-        self.dir_arquivo_configuracao = Configuration().ARQUIVO_CONFIGURACAO
-        self.dir_fotos_gate = Configuration().DIR_FOTOS_GATE
-        self.dir_fotos_alunos = Configuration().DIR_FOTOS_ALUNOS
-        self.dir_fotos_servidores = Configuration().DIR_FOTOS_SERVIDORES
-        self.dir_fotos_suspeitos = Configuration().DIR_FOTOS_SUSPEITOS
+        config = Configuration()
+        self.dir_arquivo_configuracao = config.ARQUIVO_CONFIGURACAO
+        self.dir_fotos_gate = config.DIR_FOTOS_GATE
+        self.dir_fotos_alunos = config.DIR_FOTOS_ALUNOS
+        self.dir_fotos_servidores = config.DIR_FOTOS_SERVIDORES
+        self.dir_fotos_suspeitos = config.DIR_FOTOS_SUSPEITOS
         self.individuos_registrados = {}
 
     def main(self):
         try:
-            self.load_config()
+            preparado, configuracao = self.load_config()
             fotos_portao = self.load_fotos_gate()
-            fotos_alunos = self.load_fotos_alunos()
+            fotos_alunos = self.load_fotos_alunos(configuracao["alunos"])
             fotos_servidores = self.load_fotos_servidores()
             fotos_suspeitos = self.load_fotos_suspeitos()
 
@@ -53,10 +53,12 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Load Fotos Gate', ex)
 
-    def load_fotos_alunos(self):
+    def load_fotos_alunos(self, alunos_config):
         try:
-            fotos_util = FotosUtil(self.dir_fotos_alunos)
-            fotos_alunos = fotos_util.carregar_fotos()
+            fotos_alunos = []
+            for aluno_config in alunos_config:
+                aluno_fotos = FotosUtil(aluno_config["fotos"]).carregar_fotos()
+                fotos_alunos.extend(aluno_fotos)
             return fotos_alunos
         except Exception as ex:
             raise Exception('Erro: Load Fotos Alunos', ex)
@@ -103,15 +105,16 @@ class GateSecuritySystem:
 
     def reconhecer_alunos(self, visitante, fotos_alunos):
         try:
-            foto_visitante = reconhecedor.load_image_file(visitante["foto"])
-            caracteristicas_visitante = reconhecedor.face_encodings(foto_visitante)
+            foto_visitante = facerec.load_image_file(visitante["foto"])
+            caracteristicas_visitante = facerec.face_encodings(foto_visitante)
 
             reconhecidos_alunos = []
 
             for aluno in fotos_alunos:
-                reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, aluno["fotos"])
-                if reconhecido:
-                    reconhecidos_alunos.append(aluno)
+                for foto in aluno["fotos"]:
+                    reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, foto)
+                    if reconhecido:
+                        reconhecidos_alunos.append(aluno)
 
             return reconhecidos_alunos
         except Exception as ex:
@@ -119,8 +122,8 @@ class GateSecuritySystem:
 
     def reconhecer_servidores(self, visitante, fotos_servidores):
         try:
-            foto_visitante = reconhecedor.load_image_file(visitante["foto"])
-            caracteristicas_visitante = reconhecedor.face_encodings(foto_visitante)
+            foto_visitante = facerec.load_image_file(visitante["foto"])
+            caracteristicas_visitante = facerec.face_encodings(foto_visitante)
 
             reconhecidos_servidores = []
 
@@ -136,8 +139,8 @@ class GateSecuritySystem:
     def reconhecer_suspeitos(self, visitante, fotos_suspeitos):
         try:
 
-            foto_visitante = reconhecedor.load_image_file(visitante["foto"])
-            caracteristicas_visitante = reconhecedor.face_encodings(foto_visitante)
+            foto_visitante = facerec.load_image_file(visitante["foto"])
+            caracteristicas_visitante = facerec.face_encodings(foto_visitante)
 
             reconhecidos_suspeitos = []
 
@@ -154,13 +157,13 @@ class GateSecuritySystem:
         try:
             total_de_reconhecimentos = 0
             for foto in fotos_individuo:
-                foto = reconhecedor.load_image_file(foto)
-                caracteristicas = reconhecedor.face_encodings(foto)
+                foto = facerec.load_image_file(foto)
+                caracteristicas = facerec.face_encodings(foto)
 
                 if not caracteristicas:
                     continue
 
-                reconhecimentos = reconhecedor.compare_faces(
+                reconhecimentos = facerec.compare_faces(
                     caracteristicas_visitante, caracteristicas)
                 if True in reconhecimentos:
                     total_de_reconhecimentos += 1
