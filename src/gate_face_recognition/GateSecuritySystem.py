@@ -22,17 +22,17 @@ class GateSecuritySystem:
         try:
             preparado, configuracao = self.load_config()
             fotos_portao = self.load_fotos_gate()
-            fotos_alunos = self.load_fotos_alunos(configuracao["alunos"])
+            fotos_alunos = self.load_fotos_alunos()
             fotos_servidores = self.load_fotos_servidores()
             fotos_suspeitos = self.load_fotos_suspeitos()
 
-            visitante = self.simular_entrada(fotos_portao)
-            alunos_reconhecidos = self.reconhecer_alunos(visitante, fotos_alunos)
-            servidores_reconhecidos = self.reconhecer_servidores(visitante, fotos_servidores)
-            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante, fotos_suspeitos)
-            self.reconhecer_visitante_nao_identificado(visitante, fotos_alunos, fotos_servidores, fotos_suspeitos)
+            individuo = self.simular_entrada(fotos_portao)
+            alunos_reconhecidos = self.reconhecer_alunos(individuo, configuracao)
+            servidores_reconhecidos = self.reconhecer_servidores(individuo, fotos_servidores)
+            suspeitos_reconhecidos = self.reconhecer_suspeitos(individuo, fotos_suspeitos)
+            self.reconhecer_visitante_nao_identificado(individuo, fotos_alunos, fotos_servidores, fotos_suspeitos)
 
-            self.imprimir_resultados(visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
+            self.imprimir_resultados(individuo, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
         except Exception as ex:
             raise Exception("Erro: em GateSecurity System", ex)
 
@@ -53,15 +53,13 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Load Fotos Gate', ex)
 
-    def load_fotos_alunos(self, alunos_config):
+    def load_fotos_alunos(self):
         try:
-            fotos_alunos = []
-            for aluno_config in alunos_config:
-                aluno_fotos = FotosUtil(aluno_config["fotos"]).carregar_fotos()
-                fotos_alunos.extend(aluno_fotos)
+            fotos_util = FotosUtil(self.dir_fotos_alunos)
+            fotos_alunos = fotos_util.carregar_fotos()
             return fotos_alunos
         except Exception as ex:
-            raise Exception('Erro: Load Fotos Alunos', ex)
+            raise Exception('Erro: Load Fotos Servidores', ex)
 
     def load_fotos_servidores(self):
         try:
@@ -103,36 +101,60 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Individuo Reconhecido Anteriormente', ex)
 
-    def reconhecer_alunos(self, visitante, fotos_alunos):
+    def reconhecer_alunos(self, individuo, configuracao):
         try:
-            foto_visitante = facerec.load_image_file(visitante["foto"])
-            caracteristicas_visitante = facerec.face_encodings(foto_visitante)
+            foto_individuo = facerec.load_image_file(individuo["foto"])
+            caracteristicas_visitante = facerec.face_encodings(foto_individuo)
 
-            reconhecidos_alunos = []
+            alunos_reconhecidos = []
 
-            for aluno in fotos_alunos:
-                for foto in aluno["fotos"]:
-                    reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, foto)
-                    if reconhecido:
-                        reconhecidos_alunos.append(aluno)
+            for aluno in configuracao['alunos']:
+                if self.individuo_reconhecido_anteriormente(aluno):
+                    print(f'Aluno {aluno["nome"]}, já foi reconhecido anteriormente')
+                else:
+                    fotos = aluno['fotos']
+                    total_alunos_reconhecidos = 0
+                    for foto in fotos:
+                        foto = facerec.load_image_file(foto)
+                        caracteristicas = facerec.face_encodings(foto)
+                        if caracteristicas:
+                            reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristicas[0])
+                            if True in reconhecimentos:
+                                total_alunos_reconhecidos += 1
 
-            return reconhecidos_alunos
+                    if total_alunos_reconhecidos / len(fotos) >= 0.6:
+                        alunos_reconhecidos.append(aluno)
+
+            return (len(alunos_reconhecidos) > 0), alunos_reconhecidos
         except Exception as ex:
             raise Exception('Erro: Reconhecer Alunos', ex)
 
-    def reconhecer_servidores(self, visitante, fotos_servidores):
+    def reconhecer_servidores(self, individuo, configuracao):
         try:
-            foto_visitante = facerec.load_image_file(visitante["foto"])
-            caracteristicas_visitante = facerec.face_encodings(foto_visitante)
+            foto_individuo = facerec.load_image_file(individuo["foto"])
+            caracteristicas_visitante = facerec.face_encodings(foto_individuo)
 
-            reconhecidos_servidores = []
+            servidores_reconhecidos = []
 
-            for servidor in fotos_servidores:
-                reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, servidor["fotos"])
-                if reconhecido:
-                    reconhecidos_servidores.append(servidor)
+            for servidor in configuracao['servidores']:
+                if self.individuo_reconhecido_anteriormente(servidor):
+                    print(f'Servidor {servidor["nome"]}, já foi reconhecido anteriormente')
+                else:
+                    fotos = servidor['fotos']
+                    total_servidores_reconhecidos = 0
+                    for foto in fotos:
+                        foto = facerec.load_image_file(foto)
+                        caracteristicas = facerec.face_encodings(foto)
+                        if caracteristicas:
+                            for caracteristica in caracteristicas:
+                                reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristica)
+                                if True in reconhecimentos:
+                                    total_servidores_reconhecidos += 1
 
-            return reconhecidos_servidores
+                    if total_servidores_reconhecidos / len(fotos) >= 0.6:
+                        servidores_reconhecidos.append(servidor)
+
+            return (len(servidores_reconhecidos) > 0), servidores_reconhecidos
         except Exception as ex:
             raise Exception('Erro: Reconhecer Servidores', ex)
 

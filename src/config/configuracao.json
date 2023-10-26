@@ -2,7 +2,7 @@
     "versao": "0.1",
     "alunos": [
         {
-            "matricula": "20230000",
+            "codigo": "20230000",
             "nome": "James Hetfield",
             "idade": 60,
             "area": "vocalista",
@@ -15,7 +15,7 @@
             ]
         },
         {
-            "matricula": "20230001",
+            "codigo": "20230001",
             "nome": "Kirk Hammett",
             "area": "guitarrista",
             "idade": 60,
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "matricula": "20230002",
+            "codigo": "20230002",
             "nome": "Lars Ulrich",
             "idade": 59,
             "area": "baterista",
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "matricula": "20230003",
+            "codigo": "20230003",
             "nome": "Robert Trujiilo",
             "idade": 59,
             "area": "baixista",
@@ -54,7 +54,7 @@
             ]
         },
         {
-            "matricula": "20230004",
+            "codigo": "20230004",
             "nome": "Dave Murray",
             "idade": 66,
             "area": "guitarrista",
@@ -67,7 +67,7 @@
             ]
         },
         {
-            "matricula": "20230005",
+            "codigo": "20230005",
             "nome": "Adrian Smith",
             "idade": 66,
             "area": "guitarrista",
@@ -80,7 +80,7 @@
             ]
         },
         {
-            "matricula": "20230006",
+            "codigo": "20230006",
             "nome": "Bruce Dickinson",
             "idade": 65,
             "area": "vocalista",
@@ -93,7 +93,7 @@
             ]
         },
         {
-            "matricula": "20230007",
+            "codigo": "20230007",
             "nome": "John Deacon",
             "idade": 72,
             "area": "baixista",
@@ -106,7 +106,7 @@
             ]
         },
         {
-            "matricula": "20230008",
+            "codigo": "20230008",
             "nome": "Roger Taylor",
             "idade": 74,
             "area": "baterista",
