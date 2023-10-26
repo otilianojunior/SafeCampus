@@ -1,6 +1,7 @@
 import json
 import os
 
+
 class JsonUtil:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -19,7 +20,7 @@ class JsonUtil:
         except Exception as ex:
             raise Exception('Erro: Load File', ex)
 
-    def carregar_fotos_portao():
+    def carregar_fotos_portao(self):
         portao_dir = 'src/assets/fotos/gate/'
         fotos_portao = []
         for filename in os.listdir(portao_dir):
@@ -31,6 +32,7 @@ class JsonUtil:
     def __del__(self):
         if self.file:
             self.file.close()
+
 
 # Exemplo de uso:
 if __name__ == "__main__":

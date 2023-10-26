@@ -1,34 +1,36 @@
-import face_recognition as reconhecedor
+import os
 import colored
 import secrets
 import random
 import simpy
+import face_recognition as reconhecedor
 from src.util.JsonUtil import JsonUtil
 from src.util.FotosUtil import FotosUtil
+from src.config.Configuration import Configuration
 
 
 class GateSecuritySystem:
     def __init__(self):
-        self.FOTOS_PORTAO = None
-        self.ARQUIVO_CONFIGURACAO = 'config/configuracao.json'
+        self.dir_arquivo_configuracao = Configuration().ARQUIVO_CONFIGURACAO
+        self.dir_fotos_gate = Configuration().DIR_FOTOS_GATE
+        self.dir_fotos_alunos = Configuration().DIR_FOTOS_ALUNOS
+        self.dir_fotos_servidores = Configuration().DIR_FOTOS_SERVIDORES
+        self.dir_fotos_suspeitos = Configuration().DIR_FOTOS_SUSPEITOS
         self.individuos_registrados = {}
-        self.configuracao = None
-        self.FOTOS_ALUNOS = None
-        self.FOTOS_SUSPEITOS = None
-        self.FOTOS_SERVIDORES = None
 
     def main(self):
         try:
             self.load_config()
-            self.load_fotos_gate()
-            self.load_fotos_alunos()
-            self.load_fotos_servidores()
-            self.load_fotos_suspeitos()
+            fotos_portao = self.load_fotos_gate()
+            fotos_alunos = self.load_fotos_alunos()
+            fotos_servidores = self.load_fotos_servidores()
+            fotos_suspeitos = self.load_fotos_suspeitos()
 
-            visitante = self.simular_entrada()
-            alunos_reconhecidos = self.reconhecer_alunos(visitante)
-            servidores_reconhecidos = self.reconhecer_servidores(visitante)
-            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante)
+            visitante = self.simular_entrada(fotos_portao)
+            alunos_reconhecidos = self.reconhecer_alunos(visitante, fotos_alunos)
+            servidores_reconhecidos = self.reconhecer_servidores(visitante, fotos_servidores)
+            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante, fotos_suspeitos)
+            self.reconhecer_visitante_nao_identificado(visitante, fotos_alunos, fotos_servidores, fotos_suspeitos)
 
             self.imprimir_resultados(visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
         except Exception as ex:
@@ -36,52 +38,48 @@ class GateSecuritySystem:
 
     def load_config(self):
         try:
-            json_util = JsonUtil(self.ARQUIVO_CONFIGURACAO)
+            json_util = JsonUtil(self.dir_arquivo_configuracao)
             preparado = json_util.load_file()
-            self.configuracao = json_util.data
-            return preparado, self.configuracao
+            configuracao = json_util.data
+            return preparado, configuracao
         except Exception as ex:
             raise Exception('Erro: load config', ex)
 
     def load_fotos_gate(self):
         try:
-            dir_fotos = 'assets/fotos/gate'
-            fotos_util = FotosUtil(dir_fotos)
-            self.FOTOS_PORTAO = fotos_util.carregar_fotos()
-            return self.FOTOS_PORTAO
+            fotos_util = FotosUtil(self.dir_fotos_gate)
+            fotos_portao = fotos_util.carregar_fotos()
+            return fotos_portao
         except Exception as ex:
             raise Exception('Erro: Load Fotos Gate', ex)
 
     def load_fotos_alunos(self):
         try:
-            dir_fotos = 'assets/fotos/alunos'
-            fotos_util = FotosUtil(dir_fotos)
-            self.FOTOS_ALUNOS = fotos_util.carregar_fotos()
-            return self.FOTOS_ALUNOS
+            fotos_util = FotosUtil(self.dir_fotos_alunos)
+            fotos_alunos = fotos_util.carregar_fotos()
+            return fotos_alunos
         except Exception as ex:
             raise Exception('Erro: Load Fotos Alunos', ex)
 
     def load_fotos_servidores(self):
         try:
-            dir_fotos = 'assets/fotos/servidores'
-            fotos_util = FotosUtil(dir_fotos)
-            self.FOTOS_SERVIDORES = fotos_util.carregar_fotos()
-            return self.FOTOS_SERVIDORES
+            fotos_util = FotosUtil(self.dir_fotos_servidores)
+            fotos_servidores = fotos_util.carregar_fotos()
+            return fotos_servidores
         except Exception as ex:
             raise Exception('Erro: Load Fotos Servidores', ex)
 
     def load_fotos_suspeitos(self):
         try:
-            dir_fotos = 'assets/fotos/suspeitos'
-            fotos_util = FotosUtil(dir_fotos)
-            self.FOTOS_SUSPEITOS = fotos_util.carregar_fotos()
-            return self.FOTOS_SUSPEITOS
+            fotos_util = FotosUtil(self.dir_fotos_suspeitos)
+            fotos_suspeitos = fotos_util.carregar_fotos()
+            return fotos_suspeitos
         except Exception as ex:
             raise Exception('Erro: Load Fotos Suspeitos', ex)
 
-    def simular_entrada(self):
+    def simular_entrada(self, fotos_portao):
         try:
-            foto = random.choice(self.FOTOS_PORTAO)
+            foto = random.choice(fotos_portao)
             individuo = {
                 "foto": foto,
                 'aluno': None,
@@ -101,18 +99,17 @@ class GateSecuritySystem:
                     break
             return reconhecido
         except Exception as ex:
-            raise Exception('Erro: INdividuo Reconhecido Anteriormente', ex)
+            raise Exception('Erro: Individuo Reconhecido Anteriormente', ex)
 
-    def reconhecer_alunos(self, visitante):
+    def reconhecer_alunos(self, visitante, fotos_alunos):
         try:
             foto_visitante = reconhecedor.load_image_file(visitante["foto"])
             caracteristicas_visitante = reconhecedor.face_encodings(foto_visitante)
 
             reconhecidos_alunos = []
 
-            for aluno in self.FOTOS_ALUNOS:
-                reconhecido, confianca = self.reconhecer_individual(
-                    caracteristicas_visitante, aluno["fotos"])
+            for aluno in fotos_alunos:
+                reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, aluno["fotos"])
                 if reconhecido:
                     reconhecidos_alunos.append(aluno)
 
@@ -120,16 +117,15 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Reconhecer Alunos', ex)
 
-    def reconhecer_servidores(self, visitante):
+    def reconhecer_servidores(self, visitante, fotos_servidores):
         try:
             foto_visitante = reconhecedor.load_image_file(visitante["foto"])
             caracteristicas_visitante = reconhecedor.face_encodings(foto_visitante)
 
             reconhecidos_servidores = []
 
-            for servidor in self.FOTOS_SERVIDORES:
-                reconhecido, confianca = self.reconhecer_individual(
-                    caracteristicas_visitante, servidor["fotos"])
+            for servidor in fotos_servidores:
+                reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, servidor["fotos"])
                 if reconhecido:
                     reconhecidos_servidores.append(servidor)
 
@@ -137,7 +133,7 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Reconhecer Servidores', ex)
 
-    def reconhecer_suspeitos(self, visitante):
+    def reconhecer_suspeitos(self, visitante, fotos_suspeitos):
         try:
 
             foto_visitante = reconhecedor.load_image_file(visitante["foto"])
@@ -145,9 +141,8 @@ class GateSecuritySystem:
 
             reconhecidos_suspeitos = []
 
-            for suspeito in self.FOTOS_SUSPEITOS:
-                reconhecido, confianca = self.reconhecer_individual(
-                    caracteristicas_visitante, suspeito["fotos"])
+            for suspeito in fotos_suspeitos:
+                reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, suspeito["fotos"])
                 if reconhecido:
                     reconhecidos_suspeitos.append(suspeito)
 
@@ -176,11 +171,11 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: reconhecer individual', ex)
 
-    def reconhecer_visitante_nao_identificado(self, visitante):
+    def reconhecer_visitante_nao_identificado(self, visitante, fotos_alunos, fotos_servidores, fotos_suspeitos):
         try:
-            alunos_reconhecidos = self.reconhecer_alunos(visitante)
-            servidores_reconhecidos = self.reconhecer_servidores(visitante)
-            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante)
+            alunos_reconhecidos = self.reconhecer_alunos(visitante, fotos_alunos)
+            servidores_reconhecidos = self.reconhecer_servidores(visitante, fotos_servidores)
+            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante, fotos_suspeitos)
 
             if not alunos_reconhecidos and not servidores_reconhecidos and not suspeitos_reconhecidos:
                 return True
@@ -222,11 +217,4 @@ class GateSecuritySystem:
                     print("Infracao:", suspeito['infracao'])
                     print()
         except Exception as ex:
-            raise Exception('Erro: Imprimir Resultados',ex)
-
-
-if __name__ == '__main__':
-    SafeCampus = GateSecuritySystem()
-    SafeCampus.main()
-
-
+            raise Exception('Erro: Imprimir Resultados', ex)
