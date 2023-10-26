@@ -15,6 +15,7 @@ class GateSecuritySystem:
         self.configuracao = None
         self.FOTOS_ALUNOS = None
         self.FOTOS_SUSPEITOS = None
+        self.FOTOS_SERVIDORES = None
 
     def load_config(self):
         try:
@@ -67,7 +68,8 @@ class GateSecuritySystem:
             individuo = {
                 "foto": foto,
                 'aluno': None,
-                'servidor': None
+                'servidor': None,
+                'suspeito': None,
             }
             return individuo
         except Exception as ex:
@@ -98,7 +100,6 @@ class GateSecuritySystem:
                     reconhecidos_alunos.append(aluno)
 
             return reconhecidos_alunos
-
         except Exception as ex:
             raise Exception('Erro: Reconhecer Alunos', ex)
 
@@ -116,7 +117,6 @@ class GateSecuritySystem:
                     reconhecidos_servidores.append(servidor)
 
             return reconhecidos_servidores
-
         except Exception as ex:
             raise Exception('Erro: Reconhecer Servidores', ex)
 
@@ -135,31 +135,94 @@ class GateSecuritySystem:
                     reconhecidos_suspeitos.append(suspeito)
 
             return reconhecidos_suspeitos
-
         except Exception as ex:
             raise Exception('Erro: Reconhecer Suspeitos', ex)
 
     def reconhecer_individual(self, caracteristicas_visitante, fotos_individuo):
-        total_de_reconhecimentos = 0
+        try:
+            total_de_reconhecimentos = 0
+            for foto in fotos_individuo:
+                foto = reconhecedor.load_image_file(foto)
+                caracteristicas = reconhecedor.face_encodings(foto)
 
-        for foto in fotos_individuo:
-            foto = reconhecedor.load_image_file(foto)
-            caracteristicas = reconhecedor.face_encodings(foto)
+                if not caracteristicas:
+                    continue
 
-            if not caracteristicas:
-                continue
+                reconhecimentos = reconhecedor.compare_faces(
+                    caracteristicas_visitante, caracteristicas)
+                if True in reconhecimentos:
+                    total_de_reconhecimentos += 1
 
-            reconhecimentos = reconhecedor.compare_faces(
-                caracteristicas_visitante, caracteristicas)
-            if True in reconhecimentos:
-                total_de_reconhecimentos += 1
+            confianca = total_de_reconhecimentos / len(fotos_individuo) if len(fotos_individuo) > 0 else 0
+            reconhecido = confianca >= 0.6
+            return reconhecido, confianca
+        except Exception as ex:
+            raise Exception('Erro: reconhecer individual', ex)
 
-        confianca = total_de_reconhecimentos / len(fotos_individuo) if len(fotos_individuo) > 0 else 0
-        reconhecido = confianca >= 0.6
+    def reconhecer_visitante_nao_identificado(self, visitante):
+        try:
+            alunos_reconhecidos = self.reconhecer_alunos(visitante)
+            servidores_reconhecidos = self.reconhecer_servidores(visitante)
+            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante)
 
-        return reconhecido, confianca
+            if not alunos_reconhecidos and not servidores_reconhecidos and not suspeitos_reconhecidos:
+                return True
+            else:
+                return False
+        except Exception as ex:
+            raise Exception('Erro: reconhecer visitante nao identificado', ex)
+
+    def imprimir_resultados(self, visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos):
+        try:
+            print("Resultado para o visitante:")
+            print(f"Foto: {visitante['foto']}")
+            if alunos_reconhecidos:
+                print("Visitante reconhecido como aluno:")
+                for aluno in alunos_reconhecidos:
+                    print("Matrícula:", aluno['matricula'])
+                    print("Nome:", aluno['nome'])
+                    print("Idade:", aluno['idade'])
+                    print("Área:", aluno['area'])
+                    print("Curso:", aluno['curso'])
+                    print()
+
+            if servidores_reconhecidos:
+                print("Visitante reconhecido como servidor:")
+                for servidor in servidores_reconhecidos:
+                    print("Nome:", servidor['nome'])
+                    print("Cargo:", servidor['cargo'])
+                    print("Idade:", servidor['idade'])
+                    print("Área:", servidor['area'])
+                    print("Curso:", servidor['curso'])
+                    print("Tipo:", servidor['tipo'])
+                    print()
+
+            if suspeitos_reconhecidos:
+                print("Visitante reconhecido como suspeito:")
+                for suspeito in suspeitos_reconhecidos:
+                    print("Nome:", suspeito['nome'])
+                    print("Idade:", suspeito['idade'])
+                    print("Infracao:", suspeito['infracao'])
+                    print()
+        except Exception as ex:
+            raise Exception('Erro: Imprimir Resultados',ex)
 
 
 if __name__ == '__main__':
     GATE = GateSecuritySystem()
     GATE.load_config()
+    GATE.load_fotos_gate()
+    GATE.load_fotos_alunos()
+    GATE.load_fotos_servidores()
+    GATE.load_fotos_suspeitos()
+
+    # Simulação de entrada de um visitante
+    visitante = GATE.simular_entrada()
+
+    # Realizar o reconhecimento
+    alunos_reconhecidos = GATE.reconhecer_alunos(visitante)
+    servidores_reconhecidos = GATE.reconhecer_servidores(visitante)
+    suspeitos_reconhecidos = GATE.reconhecer_suspeitos(visitante)
+
+    # Imprimir os resultados
+    GATE.imprimir_resultados(visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
