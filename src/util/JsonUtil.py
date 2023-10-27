@@ -11,7 +11,6 @@ class JsonUtil:
     def load_file(self):
         try:
             script_dir = os.path.dirname(__file__)
-            # Suba um nível para chegar ao diretório "src"
             base_dir = os.path.dirname(script_dir)
             full_path = os.path.join(base_dir, self.file_path)
             self.file = open(full_path, 'r')
@@ -32,13 +31,3 @@ class JsonUtil:
     def __del__(self):
         if self.file:
             self.file.close()
-
-
-# Exemplo de uso:
-if __name__ == "__main__":
-    file_path = "config/configuracao.json"
-    json_util = JsonUtil(file_path)
-
-    if json_util.load_file():
-        data = json_util.data
-        print(data)

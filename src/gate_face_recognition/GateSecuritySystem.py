@@ -22,17 +22,16 @@ class GateSecuritySystem:
         try:
             preparado, configuracao = self.load_config()
             fotos_portao = self.load_fotos_gate()
-            fotos_alunos = self.load_fotos_alunos()
-            fotos_servidores = self.load_fotos_servidores()
-            fotos_suspeitos = self.load_fotos_suspeitos()
+            self.load_fotos_alunos()
+            self.load_fotos_servidores()
+            self.load_fotos_suspeitos()
 
             individuo = self.simular_entrada(fotos_portao)
             alunos_reconhecidos = self.reconhecer_alunos(individuo, configuracao)
-            servidores_reconhecidos = self.reconhecer_servidores(individuo, fotos_servidores)
-            suspeitos_reconhecidos = self.reconhecer_suspeitos(individuo, fotos_suspeitos)
-            self.reconhecer_visitante_nao_identificado(individuo, fotos_alunos, fotos_servidores, fotos_suspeitos)
+            servidores_reconhecidos = self.reconhecer_servidores(individuo, configuracao)
+            suspeitos_reconhecidos = self.reconhecer_suspeitos(individuo, configuracao)
 
-            self.imprimir_resultados(individuo, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
+            self.imprimir_resultados(alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
         except Exception as ex:
             raise Exception("Erro: em GateSecurity System", ex)
 
@@ -82,9 +81,9 @@ class GateSecuritySystem:
             foto = random.choice(fotos_portao)
             individuo = {
                 "foto": foto,
-                'aluno': None,
-                'servidor': None,
-                'suspeito': None,
+                'alunos': None,
+                'servidores': None,
+                'suspeitos': None,
             }
             return individuo
         except Exception as ex:
@@ -101,145 +100,73 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Individuo Reconhecido Anteriormente', ex)
 
-    def reconhecer_alunos(self, individuo, configuracao):
+    def reconhecer_individuos(self, individuo, configuracao, tipo):
         try:
             foto_individuo = facerec.load_image_file(individuo["foto"])
             caracteristicas_visitante = facerec.face_encodings(foto_individuo)
 
-            alunos_reconhecidos = []
+            individuos_reconhecidos = []
 
-            for aluno in configuracao['alunos']:
-                if self.individuo_reconhecido_anteriormente(aluno):
-                    print(f'Aluno {aluno["nome"]}, já foi reconhecido anteriormente')
+            for individuo_config in configuracao[tipo]:
+                if self.individuo_reconhecido_anteriormente(individuo_config):
+                    print(f'{tipo.capitalize()} {individuo_config["nome"]}, já foi reconhecido anteriormente')
                 else:
-                    fotos = aluno['fotos']
-                    total_alunos_reconhecidos = 0
+                    fotos = individuo_config['fotos']
+                    total_reconhecidos = 0
+
                     for foto in fotos:
                         foto = facerec.load_image_file(foto)
                         caracteristicas = facerec.face_encodings(foto)
                         if caracteristicas:
                             reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristicas[0])
                             if True in reconhecimentos:
-                                total_alunos_reconhecidos += 1
+                                total_reconhecidos += 1
 
-                    if total_alunos_reconhecidos / len(fotos) >= 0.6:
-                        alunos_reconhecidos.append(aluno)
+                    if total_reconhecidos / len(fotos) >= 0.6:
+                        individuos_reconhecidos.append(individuo_config)
 
-            return (len(alunos_reconhecidos) > 0), alunos_reconhecidos
+            return (len(individuos_reconhecidos) > 0), individuos_reconhecidos
         except Exception as ex:
-            raise Exception('Erro: Reconhecer Alunos', ex)
+            raise Exception(f'Erro: Reconhecer {tipo.capitalize()}s', ex)
+
+    def reconhecer_alunos(self, individuo, configuracao):
+        return self.reconhecer_individuos(individuo, configuracao, 'alunos')
 
     def reconhecer_servidores(self, individuo, configuracao):
+        return self.reconhecer_individuos(individuo, configuracao, 'servidores')
+
+    def reconhecer_suspeitos(self, individuo, configuracao):
+        return self.reconhecer_individuos(individuo, configuracao, 'suspeitos')
+
+    def imprimir_resultados(self, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos):
         try:
-            foto_individuo = facerec.load_image_file(individuo["foto"])
-            caracteristicas_visitante = facerec.face_encodings(foto_individuo)
-
-            servidores_reconhecidos = []
-
-            for servidor in configuracao['servidores']:
-                if self.individuo_reconhecido_anteriormente(servidor):
-                    print(f'Servidor {servidor["nome"]}, já foi reconhecido anteriormente')
-                else:
-                    fotos = servidor['fotos']
-                    total_servidores_reconhecidos = 0
-                    for foto in fotos:
-                        foto = facerec.load_image_file(foto)
-                        caracteristicas = facerec.face_encodings(foto)
-                        if caracteristicas:
-                            for caracteristica in caracteristicas:
-                                reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristica)
-                                if True in reconhecimentos:
-                                    total_servidores_reconhecidos += 1
-
-                    if total_servidores_reconhecidos / len(fotos) >= 0.6:
-                        servidores_reconhecidos.append(servidor)
-
-            return (len(servidores_reconhecidos) > 0), servidores_reconhecidos
-        except Exception as ex:
-            raise Exception('Erro: Reconhecer Servidores', ex)
-
-    def reconhecer_suspeitos(self, visitante, fotos_suspeitos):
-        try:
-
-            foto_visitante = facerec.load_image_file(visitante["foto"])
-            caracteristicas_visitante = facerec.face_encodings(foto_visitante)
-
-            reconhecidos_suspeitos = []
-
-            for suspeito in fotos_suspeitos:
-                reconhecido, confianca = self.reconhecer_individual(caracteristicas_visitante, suspeito["fotos"])
-                if reconhecido:
-                    reconhecidos_suspeitos.append(suspeito)
-
-            return reconhecidos_suspeitos
-        except Exception as ex:
-            raise Exception('Erro: Reconhecer Suspeitos', ex)
-
-    def reconhecer_individual(self, caracteristicas_visitante, fotos_individuo):
-        try:
-            total_de_reconhecimentos = 0
-            for foto in fotos_individuo:
-                foto = facerec.load_image_file(foto)
-                caracteristicas = facerec.face_encodings(foto)
-
-                if not caracteristicas:
-                    continue
-
-                reconhecimentos = facerec.compare_faces(
-                    caracteristicas_visitante, caracteristicas)
-                if True in reconhecimentos:
-                    total_de_reconhecimentos += 1
-
-            confianca = total_de_reconhecimentos / len(fotos_individuo) if len(fotos_individuo) > 0 else 0
-            reconhecido = confianca >= 0.6
-            return reconhecido, confianca
-        except Exception as ex:
-            raise Exception('Erro: reconhecer individual', ex)
-
-    def reconhecer_visitante_nao_identificado(self, visitante, fotos_alunos, fotos_servidores, fotos_suspeitos):
-        try:
-            alunos_reconhecidos = self.reconhecer_alunos(visitante, fotos_alunos)
-            servidores_reconhecidos = self.reconhecer_servidores(visitante, fotos_servidores)
-            suspeitos_reconhecidos = self.reconhecer_suspeitos(visitante, fotos_suspeitos)
-
-            if not alunos_reconhecidos and not servidores_reconhecidos and not suspeitos_reconhecidos:
-                return True
-            else:
-                return False
-        except Exception as ex:
-            raise Exception('Erro: reconhecer visitante nao identificado', ex)
-
-    def imprimir_resultados(self, visitante, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos):
-        try:
-            print("Resultado para o visitante:")
-            print(f"Foto: {visitante['foto']}")
-            if alunos_reconhecidos:
-                print("Visitante reconhecido como aluno:")
-                for aluno in alunos_reconhecidos:
-                    print("Matrícula:", aluno['matricula'])
+            if alunos_reconhecidos[0] is True:
+                print("Indivíduos reconhecidos como alunos:")
+                for aluno in alunos_reconhecidos[1]:
+                    print("Matrícula:", aluno['codigo'])
                     print("Nome:", aluno['nome'])
                     print("Idade:", aluno['idade'])
                     print("Área:", aluno['area'])
                     print("Curso:", aluno['curso'])
                     print()
 
-            if servidores_reconhecidos:
-                print("Visitante reconhecido como servidor:")
-                for servidor in servidores_reconhecidos:
+            if servidores_reconhecidos[0] is True:
+                print("Servidores reconhecidos:")
+                for servidor in servidores_reconhecidos[1]:
                     print("Nome:", servidor['nome'])
-                    print("Cargo:", servidor['cargo'])
                     print("Idade:", servidor['idade'])
                     print("Área:", servidor['area'])
                     print("Curso:", servidor['curso'])
                     print("Tipo:", servidor['tipo'])
                     print()
 
-            if suspeitos_reconhecidos:
-                print("Visitante reconhecido como suspeito:")
-                for suspeito in suspeitos_reconhecidos:
+            if suspeitos_reconhecidos[0] is True:
+                print("Suspeitos reconhecidos:")
+                for suspeito in suspeitos_reconhecidos[1]:
                     print("Nome:", suspeito['nome'])
                     print("Idade:", suspeito['idade'])
                     print("Infracao:", suspeito['infracao'])
                     print()
         except Exception as ex:
             raise Exception('Erro: Imprimir Resultados', ex)
+

@@ -21,12 +21,3 @@ class FotosUtil:
     def obter_caminho_relativo(caminho_relativo):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         return os.path.normpath(os.path.join(script_dir, '..', caminho_relativo))
-
-
-if __name__ == "__main__":
-    dir_fotos = 'assets/fotos/gate'
-    fotos_util = FotosUtil(dir_fotos)
-    fotos_portao = fotos_util.carregar_fotos()
-
-    for foto in fotos_portao:
-        print(foto)
