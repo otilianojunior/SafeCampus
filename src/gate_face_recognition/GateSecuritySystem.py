@@ -1,9 +1,9 @@
-import colored
 import secrets
 import random
 import simpy
 import face_recognition as facerec
 from src.util.JsonUtil import JsonUtil
+from src.util.PrintUtil import PrintUtil
 from src.util.FotosUtil import FotosUtil
 from src.config.Configuration import Configuration
 
@@ -53,28 +53,21 @@ class GateSecuritySystem:
             raise Exception('Erro: Load Fotos Gate', ex)
 
     def load_fotos_alunos(self):
-        try:
-            fotos_util = FotosUtil(self.dir_fotos_alunos)
-            fotos_alunos = fotos_util.carregar_fotos()
-            return fotos_alunos
-        except Exception as ex:
-            raise Exception('Erro: Load Fotos Servidores', ex)
+        return self.load_fotos(self.dir_fotos_alunos)
 
     def load_fotos_servidores(self):
-        try:
-            fotos_util = FotosUtil(self.dir_fotos_servidores)
-            fotos_servidores = fotos_util.carregar_fotos()
-            return fotos_servidores
-        except Exception as ex:
-            raise Exception('Erro: Load Fotos Servidores', ex)
+        return self.load_fotos(self.dir_fotos_servidores)
 
     def load_fotos_suspeitos(self):
+        return self.load_fotos(self.dir_fotos_suspeitos)
+
+    def load_fotos(self, dir_fotos):
         try:
-            fotos_util = FotosUtil(self.dir_fotos_suspeitos)
-            fotos_suspeitos = fotos_util.carregar_fotos()
-            return fotos_suspeitos
+            fotos_util = FotosUtil(dir_fotos)
+            fotos = fotos_util.carregar_fotos()
+            return fotos
         except Exception as ex:
-            raise Exception('Erro: Load Fotos Suspeitos', ex)
+            raise Exception(f'Erro: Load Fotos {dir_fotos}', ex)
 
     def simular_entrada(self, fotos_portao):
         try:
@@ -89,16 +82,14 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: simular visita', ex)
 
-    def individuo_reconhecido_anteriormente(self, individuo):
-        try:
-            reconhecido = False
-            for individuo_reconhecido in self.individuos_registrados.values():
-                if individuo['codigo'] == individuo_reconhecido['codigo']:
-                    reconhecido = True
-                    break
-            return reconhecido
-        except Exception as ex:
-            raise Exception('Erro: Individuo Reconhecido Anteriormente', ex)
+    def reconhecer_alunos(self, individuo, configuracao):
+        return self.reconhecer_individuos(individuo, configuracao, 'alunos')
+
+    def reconhecer_servidores(self, individuo, configuracao):
+        return self.reconhecer_individuos(individuo, configuracao, 'servidores')
+
+    def reconhecer_suspeitos(self, individuo, configuracao):
+        return self.reconhecer_individuos(individuo, configuracao, 'suspeitos')
 
     def reconhecer_individuos(self, individuo, configuracao, tipo):
         try:
@@ -122,51 +113,34 @@ class GateSecuritySystem:
                             if True in reconhecimentos:
                                 total_reconhecidos += 1
 
-                    if total_reconhecidos / len(fotos) >= 0.6:
+                    if total_reconhecidos / len(fotos) >= 0.5:
                         individuos_reconhecidos.append(individuo_config)
 
             return (len(individuos_reconhecidos) > 0), individuos_reconhecidos
         except Exception as ex:
             raise Exception(f'Erro: Reconhecer {tipo.capitalize()}s', ex)
 
-    def reconhecer_alunos(self, individuo, configuracao):
-        return self.reconhecer_individuos(individuo, configuracao, 'alunos')
-
-    def reconhecer_servidores(self, individuo, configuracao):
-        return self.reconhecer_individuos(individuo, configuracao, 'servidores')
-
-    def reconhecer_suspeitos(self, individuo, configuracao):
-        return self.reconhecer_individuos(individuo, configuracao, 'suspeitos')
+    def individuo_reconhecido_anteriormente(self, individuo):
+        try:
+            reconhecido = False
+            for individuo_reconhecido in self.individuos_registrados.values():
+                if individuo['codigo'] == individuo_reconhecido['codigo']:
+                    reconhecido = True
+                    break
+            return reconhecido
+        except Exception as ex:
+            raise Exception('Erro: Individuo Reconhecido Anteriormente', ex)
 
     def imprimir_resultados(self, alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos):
         try:
             if alunos_reconhecidos[0] is True:
-                print("Indivíduos reconhecidos como alunos:")
-                for aluno in alunos_reconhecidos[1]:
-                    print("Matrícula:", aluno['codigo'])
-                    print("Nome:", aluno['nome'])
-                    print("Idade:", aluno['idade'])
-                    print("Área:", aluno['area'])
-                    print("Curso:", aluno['curso'])
-                    print()
+                PrintUtil.print_alunos(alunos_reconhecidos[1])
 
             if servidores_reconhecidos[0] is True:
-                print("Servidores reconhecidos:")
-                for servidor in servidores_reconhecidos[1]:
-                    print("Nome:", servidor['nome'])
-                    print("Idade:", servidor['idade'])
-                    print("Área:", servidor['area'])
-                    print("Curso:", servidor['curso'])
-                    print("Tipo:", servidor['tipo'])
-                    print()
+                PrintUtil.print_servidores(servidores_reconhecidos[1])
 
             if suspeitos_reconhecidos[0] is True:
-                print("Suspeitos reconhecidos:")
-                for suspeito in suspeitos_reconhecidos[1]:
-                    print("Nome:", suspeito['nome'])
-                    print("Idade:", suspeito['idade'])
-                    print("Infracao:", suspeito['infracao'])
-                    print()
+                PrintUtil.print_suspeitos(suspeitos_reconhecidos[1])
         except Exception as ex:
             raise Exception('Erro: Imprimir Resultados', ex)
 
