@@ -3,6 +3,7 @@ import random
 import simpy
 import face_recognition as facerec
 from src.util.JsonUtil import JsonUtil
+from src.util.DateUtil import DateUtil
 from src.util.PrintUtil import PrintUtil
 from src.util.FotosUtil import FotosUtil
 from src.config.Configuration import Configuration
@@ -71,12 +72,12 @@ class GateSecuritySystem:
 
     def simular_entrada(self, fotos_portao):
         try:
+            date_util = DateUtil()
+            hora_entrada = date_util.gerar_horario_entrada()
             foto = random.choice(fotos_portao)
             individuo = {
                 "foto": foto,
-                'alunos': None,
-                'servidores': None,
-                'suspeitos': None,
+                "hora_entrada": hora_entrada
             }
             return individuo
         except Exception as ex:
