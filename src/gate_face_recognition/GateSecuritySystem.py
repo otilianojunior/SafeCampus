@@ -72,9 +72,10 @@ class GateSecuritySystem:
 
     def simular_entrada(self, fotos_portao):
         try:
-            date_util = DateUtil()
+            date_util = DateUtil(p_hora_certa=0.5)
             hora_entrada = date_util.gerar_horario_entrada()
             foto = random.choice(fotos_portao)
+            print(f'Foto escolhida para entrada: {foto}')
             individuo = {
                 "foto": foto,
                 "hora_entrada": hora_entrada
@@ -115,6 +116,7 @@ class GateSecuritySystem:
                                 total_reconhecidos += 1
 
                     if total_reconhecidos / len(fotos) >= 0.5:
+                        individuo_config['hora_entrada'] = individuo["hora_entrada"]
                         individuos_reconhecidos.append(individuo_config)
 
             return (len(individuos_reconhecidos) > 0), individuos_reconhecidos
