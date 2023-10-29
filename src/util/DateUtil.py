@@ -1,44 +1,82 @@
-from datetime import datetime, time, timedelta
+from datetime import time
 import random
 
 
 class DateUtil:
+    def __init__(self, p_hora_certa):
+        self.hora_certa = p_hora_certa
+
+    def turnos_entrada(self):
+        try:
+            turnos = {
+                "manha": [time(7, 30), time(12, 00)],
+                "tarde": [time(13, 30), time(18, 00)],
+                "noite": [time(18, 30), time(22, 00)]
+
+            }
+            return turnos
+        except Exception as ex:
+            raise Exception('Erro: Turnos Entrada', ex)
+
     def gerar_horario_entrada(self):
-        turnos = {
-            "manha": (time(8, 0), time(12, 0)),
-            "tarde": (time(13, 0), time(18, 0)),
-            "noite": (time(18, 30), time(22, 0))
-        }
+        try:
+            turnos = self.turnos_entrada()
 
-        # Escolha um turno aleatório
-        turno_escolhido = random.choice(list(turnos.keys()))
-        intervalo_escolhido = turnos[turno_escolhido]
+            turno_escolhido = random.choice(list(turnos.keys()))
+            inicio, fim = turnos[turno_escolhido]
 
-        # Gere uma hora aleatória dentro do intervalo escolhido
-        hora_entrada = datetime.combine(datetime.today(), intervalo_escolhido[0])
-        minutos_aleatorios = random.randint(0, (intervalo_escolhido[1].hour - intervalo_escolhido[0].hour) * 60)
-        hora_entrada += timedelta(minutes=minutos_aleatorios)
+            if random.uniform(0, 1) <= self.hora_certa:
+                hora_entrada = inicio
+            else:
+                while True:
+                    hora_entrada = time(random.randint(0, 23), random.randint(0, 59))
+                    if inicio < hora_entrada < fim:
+                        break
 
-        return hora_entrada
+            return hora_entrada
+        except Exception as ex:
+            raise Exception('Erro: Gerar Horario Entrada', ex)
 
     def gerar_horario_saida(self, hora_entrada):
-        # Obtenha o limite máximo de saída como 22:00
-        limite_maximo_saida = time(22, 0)
+        try:
+            turnos = self.turnos_entrada()
+            horario_saida_maximo = None
 
-        # Gere um horário de saída aleatório que seja após o horário de entrada
-        hora_saida = datetime.combine(datetime.today(), limite_maximo_saida)
+            if hora_entrada == turnos["manha"][0]:
+                hora_saida = turnos["manha"][1]
 
-        while hora_saida <= hora_entrada or hora_saida.hour >= 22:
-            minutos_aleatorios = random.randint(0, (limite_maximo_saida.hour - hora_entrada.time().hour) * 60)
-            hora_saida = datetime.combine(datetime.today(), hora_entrada.time()) + timedelta(minutes=minutos_aleatorios)
+            elif hora_entrada == turnos["tarde"][0]:
+                hora_saida = turnos["tarde"][1]
 
-        return hora_saida
+            elif hora_entrada == turnos["noite"][0]:
+                hora_saida = turnos["noite"][1]
+
+            else:
+                if turnos["manha"][0] <= hora_entrada < turnos["manha"][1]:
+                    horario_saida_maximo = turnos["manha"][1]
+
+                elif turnos["tarde"][0] <= hora_entrada < turnos["tarde"][1]:
+                    horario_saida_maximo = turnos["tarde"][1]
+
+                elif turnos["noite"][0] <= hora_entrada < turnos["noite"][1]:
+                    horario_saida_maximo = turnos["noite"][1]
+
+                while True:
+                    hora_saida = time(random.randint(0, 23), random.randint(0, 59))
+                    if hora_entrada < hora_saida <= horario_saida_maximo:
+                        break
+
+            return hora_saida
+        except Exception as ex:
+            raise Exception('Erro: Gerar Horario Saida', ex)
 
 
-# Exemplo de uso:
-date_util = DateUtil()
-hora_entrada = date_util.gerar_horario_entrada()
-hora_saida = date_util.gerar_horario_saida(hora_entrada)
-
-print(f"Hora de entrada: {hora_entrada.strftime('%H:%M')}")
-print(f"Hora de saída: {hora_saida.strftime('%H:%M')}")
+# if __name__ == '__main__':
+#     p_hora_certa = 0.1
+#
+#     HORA = DateUtil(p_hora_certa)
+#     for _ in range(1):
+#         hora_entrada = HORA.gerar_horario_entrada()
+#         hora_saida = HORA.gerar_horario_saida(hora_entrada)
+#         print('entrada: ', hora_entrada)
+#         print('saida: ', hora_saida)
