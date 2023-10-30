@@ -1,4 +1,3 @@
-import secrets
 import random
 import simpy
 import face_recognition as facerec
@@ -17,20 +16,23 @@ class GateSecuritySystem:
         self.dir_fotos_alunos = config.DIR_FOTOS_ALUNOS
         self.dir_fotos_servidores = config.DIR_FOTOS_SERVIDORES
         self.dir_fotos_suspeitos = config.DIR_FOTOS_SUSPEITOS
+        self.dir_fotos_visitantes = config.DIR_FOTOS_VISITANTES
         self.individuos_registrados = {}
 
     def main(self):
         try:
             preparado, configuracao = self.load_config()
-            fotos_portao = self.load_fotos_gate()
-            self.load_fotos_alunos()
-            self.load_fotos_servidores()
-            self.load_fotos_suspeitos()
+
+            fotos_portao = self.load_fotos(self.dir_fotos_gate)
+            self.load_fotos(self.dir_fotos_alunos)
+            self.load_fotos(self.dir_fotos_servidores)
+            self.load_fotos(self.dir_fotos_suspeitos)
 
             individuo = self.simular_entrada(fotos_portao)
-            alunos_reconhecidos = self.reconhecer_alunos(individuo, configuracao)
-            servidores_reconhecidos = self.reconhecer_servidores(individuo, configuracao)
-            suspeitos_reconhecidos = self.reconhecer_suspeitos(individuo, configuracao)
+
+            alunos_reconhecidos = self.reconhecer_individuos(individuo, configuracao, 'alunos')
+            servidores_reconhecidos = self.reconhecer_individuos(individuo, configuracao, 'servidores')
+            suspeitos_reconhecidos = self.reconhecer_individuos(individuo, configuracao, 'suspeitos')
 
             self.imprimir_resultados(alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
         except Exception as ex:
@@ -44,23 +46,6 @@ class GateSecuritySystem:
             return preparado, configuracao
         except Exception as ex:
             raise Exception('Erro: load config', ex)
-
-    def load_fotos_gate(self):
-        try:
-            fotos_util = FotosUtil(self.dir_fotos_gate)
-            fotos_portao = fotos_util.carregar_fotos()
-            return fotos_portao
-        except Exception as ex:
-            raise Exception('Erro: Load Fotos Gate', ex)
-
-    def load_fotos_alunos(self):
-        return self.load_fotos(self.dir_fotos_alunos)
-
-    def load_fotos_servidores(self):
-        return self.load_fotos(self.dir_fotos_servidores)
-
-    def load_fotos_suspeitos(self):
-        return self.load_fotos(self.dir_fotos_suspeitos)
 
     def load_fotos(self, dir_fotos):
         try:
@@ -83,15 +68,6 @@ class GateSecuritySystem:
             return individuo
         except Exception as ex:
             raise Exception('Erro: simular visita', ex)
-
-    def reconhecer_alunos(self, individuo, configuracao):
-        return self.reconhecer_individuos(individuo, configuracao, 'alunos')
-
-    def reconhecer_servidores(self, individuo, configuracao):
-        return self.reconhecer_individuos(individuo, configuracao, 'servidores')
-
-    def reconhecer_suspeitos(self, individuo, configuracao):
-        return self.reconhecer_individuos(individuo, configuracao, 'suspeitos')
 
     def reconhecer_individuos(self, individuo, configuracao, tipo):
         try:
@@ -118,6 +94,10 @@ class GateSecuritySystem:
                     if total_reconhecidos / len(fotos) >= 0.5:
                         individuo_config['hora_entrada'] = individuo["hora_entrada"]
                         individuos_reconhecidos.append(individuo_config)
+
+            if not individuos_reconhecidos:
+                caminho_foto_visitante = self.salvar_foto_visitante(foto_individuo, "visitante")
+                print(f'Visitante não reconhecido. Foto salva em: {caminho_foto_visitante}')
 
             return (len(individuos_reconhecidos) > 0), individuos_reconhecidos
         except Exception as ex:
@@ -147,3 +127,10 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception('Erro: Imprimir Resultados', ex)
 
+    def salvar_foto_visitante(self, foto, tipo):
+        try:
+            fotos_util = FotosUtil(self.dir_fotos_visitantes)
+            caminho_foto_visitante = fotos_util.salvar_foto(foto, tipo)
+            return caminho_foto_visitante
+        except Exception as ex:
+            raise Exception(f'Erro: Salvar Foto Visitante', ex)
