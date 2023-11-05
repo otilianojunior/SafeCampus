@@ -1,5 +1,5 @@
-import random
 import simpy
+import random
 import face_recognition as facerec
 from src.util.JsonUtil import JsonUtil
 from src.util.DateUtil import DateUtil
@@ -28,11 +28,12 @@ class GateSecuritySystem:
             self.load_fotos(self.dir_fotos_servidores)
             self.load_fotos(self.dir_fotos_suspeitos)
 
-            individuo = self.simular_entrada(fotos_portao)
+            foto_entrada = self.simular_entrada(fotos_portao)
+            self.recorta_salva_rostos(foto_entrada)
 
-            alunos_reconhecidos = self.reconhecer_individuos(individuo, configuracao, 'alunos')
-            servidores_reconhecidos = self.reconhecer_individuos(individuo, configuracao, 'servidores')
-            suspeitos_reconhecidos = self.reconhecer_individuos(individuo, configuracao, 'suspeitos')
+            alunos_reconhecidos = self.reconhecer_individuos(foto_entrada, configuracao, tipo='alunos')
+            servidores_reconhecidos = self.reconhecer_individuos(foto_entrada, configuracao, tipo='servidores')
+            suspeitos_reconhecidos = self.reconhecer_individuos(foto_entrada, configuracao, tipo='suspeitos')
 
             self.imprimir_resultados(alunos_reconhecidos, servidores_reconhecidos, suspeitos_reconhecidos)
         except Exception as ex:
@@ -55,25 +56,55 @@ class GateSecuritySystem:
         except Exception as ex:
             raise Exception(f'Erro: Load Fotos {dir_fotos}', ex)
 
+    def detectar_rostos(self, imagem):
+        face_locations = facerec.face_locations(imagem)
+        return face_locations
+
+    def carregar_caracteristicas_rosto(self, foto):
+        foto_individuo = facerec.load_image_file(foto)
+        caracteristicas_visitante = facerec.face_encodings(foto_individuo)
+        return caracteristicas_visitante
+
+    def comparar_caracteristicas(self, caracteristicas_visitante, caracteristicas_registradas):
+        reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristicas_registradas)
+        return reconhecimentos
+
+    def recortar_rostos(self, imagem, face_locations):
+        rostos = [imagem[top:bottom, left:right] for top, right, bottom, left in face_locations]
+        return rostos
+
+    def salvar_rostos(self, rostos, diretorio_saida):
+        fotos_util = FotosUtil(diretorio_saida)
+        caminhos_arquivos = [fotos_util.salvar_imagem_rosto(rosto) for rosto in rostos]
+        return caminhos_arquivos
+
+    def recorta_salva_rostos(self, foto_entrada):
+        try:
+            imagem = facerec.load_image_file(foto_entrada['foto'])
+            face_locations = self.detectar_rostos(imagem)
+            rostos = self.recortar_rostos(imagem, face_locations)
+            caminhos_arquivos = self.salvar_rostos(rostos, self.dir_fotos_visitantes)
+            return caminhos_arquivos
+        except Exception as ex:
+            raise Exception('Erro: separa fotos', ex)
+
     def simular_entrada(self, fotos_portao):
         try:
             date_util = DateUtil(p_hora_certa=0.5)
             hora_entrada = date_util.gerar_horario_entrada()
             foto = random.choice(fotos_portao)
             print(f'Foto escolhida para entrada: {foto}')
-            individuo = {
+            foto_entrada = {
                 "foto": foto,
                 "hora_entrada": hora_entrada
             }
-            return individuo
+            return foto_entrada
         except Exception as ex:
             raise Exception('Erro: simular visita', ex)
 
-    def reconhecer_individuos(self, individuo, configuracao, tipo):
+    def reconhecer_individuos(self, foto_entrada, configuracao, tipo):
         try:
-            foto_individuo = facerec.load_image_file(individuo["foto"])
-            caracteristicas_visitante = facerec.face_encodings(foto_individuo)
-
+            caracteristicas_visitante = self.carregar_caracteristicas_rosto(foto_entrada["foto"])
             individuos_reconhecidos = []
 
             for individuo_config in configuracao[tipo]:
@@ -84,30 +115,25 @@ class GateSecuritySystem:
                     total_reconhecidos = 0
 
                     for foto in fotos:
-                        foto = facerec.load_image_file(foto)
-                        caracteristicas = facerec.face_encodings(foto)
+                        caracteristicas = self.carregar_caracteristicas_rosto(foto)
                         if caracteristicas:
-                            reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristicas[0])
+                            reconhecimentos = self.comparar_caracteristicas(caracteristicas_visitante, caracteristicas[0])
                             if True in reconhecimentos:
                                 total_reconhecidos += 1
 
                     if total_reconhecidos / len(fotos) >= 0.5:
-                        individuo_config['hora_entrada'] = individuo["hora_entrada"]
+                        individuo_config['hora_entrada'] = foto_entrada["hora_entrada"]
                         individuos_reconhecidos.append(individuo_config)
-
-            if not individuos_reconhecidos:
-                caminho_foto_visitante = self.salvar_foto_visitante(foto_individuo, "visitante")
-                print(f'Visitante não reconhecido. Foto salva em: {caminho_foto_visitante}')
 
             return (len(individuos_reconhecidos) > 0), individuos_reconhecidos
         except Exception as ex:
             raise Exception(f'Erro: Reconhecer {tipo.capitalize()}s', ex)
 
-    def individuo_reconhecido_anteriormente(self, individuo):
+    def individuo_reconhecido_anteriormente(self, foto_entrada):
         try:
             reconhecido = False
             for individuo_reconhecido in self.individuos_registrados.values():
-                if individuo['codigo'] == individuo_reconhecido['codigo']:
+                if foto_entrada['codigo'] == individuo_reconhecido['codigo']:
                     reconhecido = True
                     break
             return reconhecido
@@ -126,11 +152,3 @@ class GateSecuritySystem:
                 PrintUtil.print_suspeitos(suspeitos_reconhecidos[1])
         except Exception as ex:
             raise Exception('Erro: Imprimir Resultados', ex)
-
-    def salvar_foto_visitante(self, foto, tipo):
-        try:
-            fotos_util = FotosUtil(self.dir_fotos_visitantes)
-            caminho_foto_visitante = fotos_util.salvar_foto(foto, tipo)
-            return caminho_foto_visitante
-        except Exception as ex:
-            raise Exception(f'Erro: Salvar Foto Visitante', ex)

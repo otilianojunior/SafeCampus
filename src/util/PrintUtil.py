@@ -4,7 +4,7 @@ import colored
 class PrintUtil:
     @staticmethod
     def print_alunos(alunos):
-        print(colored.stylize("Indivíduos reconhecidos como alunos:", colored.bg("yellow") + colored.fg("black")))
+        print(colored.stylize("Alunos reconhecidos:", colored.bg("yellow") + colored.fg("black")))
         print()
         for aluno in alunos:
             for key, value in aluno.items():

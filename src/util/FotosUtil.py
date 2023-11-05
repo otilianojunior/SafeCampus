@@ -1,7 +1,6 @@
 import os
 import secrets
 from PIL import Image
-import numpy as np
 
 
 class FotosUtil:
@@ -20,15 +19,16 @@ class FotosUtil:
         except Exception as ex:
             raise Exception('Erro: Carregar fotos', ex)
 
-    def salvar_foto(self, foto, tipo):
+    def salvar_imagem_rosto(self, rosto):
         try:
-            nome_arquivo = f"{tipo}_{secrets.token_hex(8)}.jpeg"
-            caminho_foto = os.path.join(self.dir_path, nome_arquivo)
-            img = Image.fromarray(np.uint8(foto))
-            img.save(caminho_foto)
-            return caminho_foto
+            token = secrets.token_hex(16)
+            nome_arquivo = f"rosto_{token}.jpg"
+            imagem_rosto = Image.fromarray(rosto)
+            caminho_arquivo = os.path.join(self.dir_path, nome_arquivo)
+            imagem_rosto.save(caminho_arquivo)
+            return caminho_arquivo
         except Exception as ex:
-            raise Exception('Erro: Salvar foto', ex)
+            raise Exception('Erro: Salvar imagem de rosto', ex)
 
     @staticmethod
     def obter_caminho_relativo(caminho_relativo):
