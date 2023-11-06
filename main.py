@@ -3,7 +3,7 @@ from src.gate_campus.SafeCampus import SafeCampus
 from src.config.Configuration import Configuration
 
 
-if __name__ == "__main":
+if __name__ == "__main__":
     safe_campus = SafeCampus()
     config = Configuration()
 
@@ -25,4 +25,4 @@ if __name__ == "__main":
     ambiente_de_simulacao.process(safe_campus.reconhecer_professores(ambiente_de_simulacao, professores, configuracao))
 
     ambiente_de_simulacao.process(safe_campus.simula_saida(ambiente_de_simulacao))
-    ambiente_de_simulacao.run(until=200)
+    ambiente_de_simulacao.run(until=2000)

@@ -72,22 +72,24 @@ class SafeCampus:
         caracteristicas_visitante = self.carregar_caracteristicas_rosto(foto_entrada)
 
         individuos = []
-        for individuo in configuracao["pacientes"]:
-            if not self.individuo_reconhecido_anteriormente(individuo):
-                fotos = individuo["fotos"]
-                total_de_reconhecimentos = 0
 
-                for foto in fotos:
-                    foto = facerec.load_image_file(foto)
-                    caracteristicas = facerec.face_encodings(foto)[0]
-                    reconhecimentos = self.comparar_caracteristicas(caracteristicas_visitante, caracteristicas)
-                    if True in reconhecimentos:
-                        total_de_reconhecimentos += 1
+        for categoria in ["alunos", "suspeitos", "professores", "visitantes"]:
+            for individuo in configuracao[categoria]:
+                if not self.individuo_reconhecido_anteriormente(individuo):
+                    fotos = individuo["fotos"]
+                    total_de_reconhecimentos = 0
 
-                if total_de_reconhecimentos / len(fotos) >= 0.6:
-                    individuos.append(individuo)
-            else:
-                print("Individuo reconhecido previamente")
+                    for foto in fotos:
+                        foto = facerec.load_image_file(foto)
+                        caracteristicas = facerec.face_encodings(foto)[0]
+                        reconhecimentos = self.comparar_caracteristicas(caracteristicas_visitante, caracteristicas)
+                        if True in reconhecimentos:
+                            total_de_reconhecimentos += 1
+
+                    if total_de_reconhecimentos / len(fotos) >= 0.6:
+                        individuos.append(individuo)
+                else:
+                    print("Individuo reconhecido previamente")
 
         return (len(individuos) > 0), individuos
 
