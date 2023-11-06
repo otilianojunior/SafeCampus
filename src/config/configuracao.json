@@ -2,272 +2,156 @@
     "versao": "0.1",
     "alunos": [
         {
-            "codigo": "20230000",
-            "nome": "James Hetfield",
-            "idade": 60,
-            "area": "vocalista",
-            "curso": "Metallica",
+            "codigo": "2023001",
+            "nome": "Harry James Potter",
+            "idade": 43,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "casa": "Gryffindor",
             "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/alunos/JamesHetfield.jpeg",
-                "src/assets/fotos/alunos/JamesHetfield1.jpeg",
-                "src/assets/fotos/alunos/JamesHetfield2.jpeg"
+                "src/assets/fotos/alunos/HarryPotter.jpeg",
+                "src/assets/fotos/alunos/HarryPotter(1).jpeg",
+                "src/assets/fotos/alunos/HarryPotter(2).jpeg"
             ]
         },
         {
-            "codigo": "20230001",
-            "nome": "Kirk Hammett",
-            "area": "guitarrista",
-            "idade": 60,
-            "curso": "Metallica",
+            "codigo": "2023002",
+            "nome": "Hermione Jean Granger",
+            "idade": 44,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "casa": "Gryffindor",
             "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/alunos/KirkHammett.jpeg",
-                "src/assets/fotos/alunos/KirkHammett1.jpeg",
-                "src/assets/fotos/alunos/KirkHammett2.jpeg"
+                "src/assets/fotos/alunos/Hermione.jpeg",
+                "src/assets/fotos/alunos/Hermione(1).jpeg",
+                "src/assets/fotos/alunos/Hermione(2).jpeg"
             ]
         },
         {
-            "codigo": "20230002",
-            "nome": "Lars Ulrich",
-            "idade": 59,
-            "area": "baterista",
-            "curso": "Metallica",
+            "codigo": "2023003",
+            "nome": "Ronald Bílius Weasley",
+            "idade": 43,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "casa": "Gryffindor",
             "tipo": "Aluno",
             "fotos": [
-                "src/assets/fotos/alunos/LarsUlrich.jpeg",
-                "src/assets/fotos/alunos/LarsUlrich1.jpeg",
-                "src/assets/fotos/alunos/LarsUlrich2.jpeg"
-            ]
-        },
-        {
-            "codigo": "20230003",
-            "nome": "Robert Trujiilo",
-            "idade": 59,
-            "area": "baixista",
-            "curso": "Metallica",
-            "tipo": "Aluno",
-            "fotos": [
-                "src/assets/fotos/alunos/RobertTrujiilo.jpeg",
-                "src/assets/fotos/alunos/RobertTrujiilo1.jpeg",
-                "src/assets/fotos/alunos/RobertTrujiilo2.jpeg"
-            ]
-        },
-        {
-            "codigo": "20230004",
-            "nome": "Dave Murray",
-            "idade": 66,
-            "area": "guitarrista",
-            "curso": "Iron Maiden",
-            "tipo": "Aluno",
-            "fotos": [
-                "src/assets/fotos/alunos/DaveMurray.jpeg",
-                "src/assets/fotos/alunos/DaveMurray1.jpeg",
-                "src/assets/fotos/alunos/DaveMurray2.jpeg"
-            ]
-        },
-        {
-            "codigo": "20230005",
-            "nome": "Adrian Smith",
-            "idade": 66,
-            "area": "guitarrista",
-            "curso": "Iron Maiden",
-            "tipo": "Aluno",
-            "fotos": [
-                "src/assets/fotos/alunos/AdrianSmith.jpeg",
-                "src/assets/fotos/alunos/AdrianSmith1.jpeg",
-                "src/assets/fotos/alunos/AdrianSmith2.jpeg"
-            ]
-        },
-        {
-            "codigo": "20230006",
-            "nome": "Bruce Dickinson",
-            "idade": 65,
-            "area": "vocalista",
-            "curso": "Iron Maiden",
-            "tipo": "Aluno",
-            "fotos": [
-                "src/assets/fotos/alunos/BruceDickinson.jpeg",
-                "src/assets/fotos/alunos/BruceDickinson1.jpeg",
-                "src/assets/fotos/alunos/BruceDickinson2.jpeg"
-            ]
-        },
-        {
-            "codigo": "20230007",
-            "nome": "John Deacon",
-            "idade": 72,
-            "area": "baixista",
-            "curso": "Queen",
-            "tipo": "Aluno",
-            "fotos": [
-                "src/assets/fotos/alunos/JohnDeacon.jpeg",
-                "src/assets/fotos/alunos/JohnDeacon1.jpeg",
-                "src/assets/fotos/alunos/JohnDeacon2.jpeg"
-            ]
-        },
-        {
-            "codigo": "20230008",
-            "nome": "Roger Taylor",
-            "idade": 74,
-            "area": "baterista",
-            "curso": "Queen",
-            "tipo": "Aluno",
-            "fotos": [
-                "src/assets/fotos/alunos/RogerTaylor.jpeg",
-                "src/assets/fotos/alunos/RogerTaylor1.jpeg",
-                "src/assets/fotos/alunos/RogerTaylor2.jpeg"
+                "src/assets/fotos/alunos/Rony.jpeg",
+                "src/assets/fotos/alunos/Rony(1).jpeg",
+                "src/assets/fotos/alunos/Rony(2).jpeg"
             ]
         }
     ],
-    "servidores": [
+    "professores": [
         {
-            "codigo": "0001",
-            "nome": "John Lennon",
-            "idade": 83,
-            "area": "cantor",
-            "curso": "Beatles",
+            "codigo": "10001",
+            "nome": "Minerva McGonagall ",
+            "idade": 99,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "materia": "Transfiguração",
             "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/servidores/JohnLennon.jpeg",
-                "src/assets/fotos/servidores/JohnLennon1.jpeg",
-                "src/assets/fotos/servidores/JohnLennon2.jpeg"
+                "src/assets/fotos/professores/MinervaMcgonagall.jpeg",
+                "src/assets/fotos/professores/MinervaMcgonagall(1).jpeg",
+                "src/assets/fotos/professores/MinervaMcgonagall(2).jpeg"
             ]
         },
         {
-            "codigo": "0002",
-            "nome": "Paul McCartney",
-            "idade": 81,
-            "area": "cantor",
-            "curso": "Beatles",
+            "codigo": "20002",
+            "nome": "Remus John Lupin",
+            "idade": 63,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "materia": "Defesa Contra as Artes das Trevas",
             "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/servidores/PaulMcCartney.jpeg",
-                "src/assets/fotos/servidores/PaulMcCartney1.jpeg",
-                "src/assets/fotos/servidores/PaulMcCartney2.jpeg"
+                "src/assets/fotos/professores/RemusLupin.jpeg",
+                "src/assets/fotos/professores/RemusLupin(1).jpeg",
+                "src/assets/fotos/professores/RemusLupin(2).jpeg"
             ]
         },
         {
-            "codigo": "0003",
-            "nome": "George Harrison",
-            "idade": 80,
-            "area": "guitarrista",
-            "curso": "Beatles",
+            "codigo": "30003",
+            "nome": "Severus Snape",
+            "idade": 63,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "materia": "Poções",
             "tipo": "Professor",
             "fotos": [
-                "src/assets/fotos/servidores/GeorgeHarrison.jpeg",
-                "src/assets/fotos/servidores/GeorgeHarrison1.jpeg",
-                "src/assets/fotos/servidores/GeorgeHarrison2.jpeg"
-            ]
-        },
-        {
-            "codigo": "0004",
-            "nome": "Ringo Star",
-            "idade": 83,
-            "area": "musico",
-            "curso": "Beatles",
-            "tipo": "Professor",
-            "fotos": [
-                "src/assets/fotos/servidores/RingoStar.jpeg",
-                "src/assets/fotos/servidores/RingoStar1.jpeg",
-                "src/assets/fotos/servidores/RingoStar2.jpeg"
-            ]
-        },
-        {
-            "codigo": "0005",
-            "nome": "Mick Jagger",
-            "idade": 80,
-            "area": "vocalista",
-            "curso": "Rolling Stones",
-            "tipo": "Serviços Gerais",
-            "fotos": [
-                "src/assets/fotos/servidores/MickJagger.jpeg",
-                "src/assets/fotos/servidores/MickJagger1.jpeg",
-                "src/assets/fotos/servidores/MickJagger2.jpeg"
-            ]
-        },
-        {
-            "codigo": "0006",
-            "nome": "Keith Richards",
-            "idade": 79,
-            "area": "guitarrista",
-            "curso": "Rolling Stones",
-            "tipo": "Serviços Gerais",
-            "fotos": [
-                "src/assets/fotos/servidores/KeithRichards.jpeg",
-                "src/assets/fotos/servidores/KeithRichards1.jpeg",
-                "src/assets/fotos/servidores/KeithRichards2.jpeg"
-            ]
-        },
-        {
-            "codigo": "0007",
-            "nome": "Brian May",
-            "idade": 76,
-            "area": "guitarrista",
-            "curso": "Queen",
-            "tipo": "Administrativo",
-            "fotos": [
-                "src/assets/fotos/servidores/BrianMay.jpeg",
-                "src/assets/fotos/servidores/BrianMay1.jpeg",
-                "src/assets/fotos/servidores/BrianMay2.jpeg"
-            ]
-        },
-        {
-            "codigo": "0008",
-            "nome": "Freddie Mercury",
-            "idade": 77,
-            "area": "vocalista",
-            "curso": "Queen",
-            "tipo": "Administrativo",
-            "fotos": [
-                "src/assets/fotos/servidores/FreddieMercury.jpeg",
-                "src/assets/fotos/servidores/FreddieMercury1.jpeg",
-                "src/assets/fotos/servidores/FreddieMercury2.jpeg"
+                "src/assets/fotos/professores/SeverusSnape.jpeg",
+                "src/assets/fotos/professores/SeverusSnape(1).jpeg",
+                "src/assets/fotos/professores/SeverusSnape(2).jpeg"
             ]
         }
     ],
     "suspeitos": [
         {
-            "codigo": "20231",
-            "nome": "Dan Reynolds",
-            "idade": 36,
-            "infracao": "Imagine Dragons",
+            "codigo": "0001",
+            "nome": "Tom Marvolo Riddle",
+            "idade": 97,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "casa": "Slytherin",
             "fotos": [
-                "src/assets/fotos/suspeitos/DanReynolds.jpeg",
-                "src/assets/fotos/suspeitos/DanReynolds1.jpeg",
-                "src/assets/fotos/suspeitos/DanReynolds2.jpeg"
+                "src/assets/fotos/suspeitos/Voldemort.jpeg",
+                "src/assets/fotos/suspeitos/Voldemort(1).jpeg",
+                "src/assets/fotos/suspeitos/Voldemort(2).jpeg"
             ]
         },
         {
-            "codigo": "20232",
-            "nome": "Daniel Wayne Sermon",
-            "idade": 39,
-            "infracao": "Imagine Dragons",
+            "codigo": "0002",
+            "nome": "Bellatrix Rosier Black Lestrange",
+            "idade": 72,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "casa": "Slytherin",
             "fotos": [
-                "src/assets/fotos/suspeitos/DanielWayneSermon.jpeg",
-                "src/assets/fotos/suspeitos/DanielWayneSermon1.jpeg",
-                "src/assets/fotos/suspeitos/DanielWayneSermon2.jpeg"
+                "src/assets/fotos/suspeitos/Bellatrix.jpeg",
+                "src/assets/fotos/suspeitos/Bellatrix(1).jpeg",
+                "src/assets/fotos/suspeitos/Bellatrix(2).jpeg"
             ]
         },
         {
-            "codigo": "20233",
-            "nome": "Daniel Platzman",
-            "idade": 37,
-            "infracao": "Imagine Dragons",
+            "codigo": "0003",
+            "nome": "Dolores Umbridge",
+            "idade": 62,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "casa": "Slytherin",
             "fotos": [
-                "src/assets/fotos/suspeitos/DanielPlatzman.jpeg",
-                "src/assets/fotos/suspeitos/DanielPlatzman1.jpeg",
-                "src/assets/fotos/suspeitos/DanielPlatzman2.jpeg"
+                "src/assets/fotos/suspeitos/Dolores.jpeg",
+                "src/assets/fotos/suspeitos/Dolores(1).jpeg",
+                "src/assets/fotos/suspeitos/Dolores(2).jpeg"
+            ]
+        }
+    ],
+    "visitantes": [
+        {
+            "codigo": "9991",
+            "nome": "Fleur Isabelle Weasley",
+            "idade": 35,
+            "escola": "Académie de Magie Beauxbâtons",
+            "fotos": [
+                "src/assets/fotos/visitantes/Fleur.jpeg",
+                "src/assets/fotos/visitantes/Fleur(1).jpeg",
+                "src/assets/fotos/visitantes/Fleur(2).jpeg"
             ]
         },
         {
-            "codigo": "20234",
-            "nome": "Ben McKee",
-            "idade": 38,
-            "infracao": "Imagine Dragons",
+            "codigo": "9992",
+            "nome": "Sirius Black III",
+            "idade": 64,
+            "escola": "Hogwarts School of Witchcraft and Wizardry",
             "fotos": [
-                "src/assets/fotos/suspeitos/BenMcKee.jpeg",
-                "src/assets/fotos/suspeitos/BenMcKee1.jpeg",
-                "src/assets/fotos/suspeitos/BenMcKee2.jpeg"
+                "src/assets/fotos/visitantes/Sirius.jpeg",
+                "src/assets/fotos/visitantes/Sirius(1).jpeg",
+                "src/assets/fotos/visitantes/Sirius(2).jpeg"
+            ]
+        },
+        {
+            "codigo": "9993",
+            "nome": "Viktor Krum",
+            "idade": 47,
+            "escola": "Durmstrang Institut för Magisk Lärande",
+            "fotos": [
+                "src/assets/fotos/visitantes/Viktor.jpeg",
+                "src/assets/fotos/visitantes/Viktor(1).jpeg",
+                "src/assets/fotos/visitantes/Viktor(2).jpeg"
             ]
         }
     ]

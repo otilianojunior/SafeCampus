@@ -8,19 +8,19 @@ class PrintUtil:
         print()
         for aluno in alunos:
             for key, value in aluno.items():
-                if key in ("codigo", "nome", "idade", "area", "curso", "hora_entrada"):
+                if key in ("codigo", "nome", "idade", "escola", "casa", "hora_entrada"):
                     key = colored.stylize(key, colored.fg("light_blue"))
                     value = colored.stylize(value, colored.fg("green"))
                     print(f"{key}: {value}")
             print()
 
     @staticmethod
-    def print_servidores(servidores):
-        print(colored.stylize("Servidores reconhecidos:", colored.bg("yellow") + colored.fg("black")))
+    def print_professores(professores):
+        print(colored.stylize("Professores reconhecidos:", colored.bg("yellow") + colored.fg("black")))
         print()
-        for servidor in servidores:
-            for key, value in servidor.items():
-                if key in ("nome", "idade", "area", "curso", "tipo", "hora_entrada"):
+        for professor in professores:
+            for key, value in professor.items():
+                if key in ("codigo", "nome", "idade", "escola", "materia", "hora_entrada"):
                     key = colored.stylize(key, colored.fg("light_blue"))
                     value = colored.stylize(value, colored.fg("green"))
                     print(f"{key}: {value}")
@@ -32,7 +32,19 @@ class PrintUtil:
         print()
         for suspeito in suspeitos:
             for key, value in suspeito.items():
-                if key in ("nome", "idade", "infracao", "hora_entrada"):
+                if key in ("codigo", "nome", "idade", "escola", "casa", "hora_entrada"):
+                    key = colored.stylize(key, colored.fg("light_blue"))
+                    value = colored.stylize(value, colored.fg("green"))
+                    print(f"{key}: {value}")
+            print()
+
+    @staticmethod
+    def print_visitantes(visitantes):
+        print(colored.stylize("Visitantes reconhecidos:", colored.bg("yellow") + colored.fg("black")))
+        print()
+        for visitante in visitantes:
+            for key, value in visitante.items():
+                if key in ("codigo", "nome", "idade", "escola", "hora_entrada"):
                     key = colored.stylize(key, colored.fg("light_blue"))
                     value = colored.stylize(value, colored.fg("green"))
                     print(f"{key}: {value}")

@@ -20,7 +20,7 @@ class JsonUtil:
             raise Exception('Erro: Load File', ex)
 
     def carregar_fotos_portao(self):
-        portao_dir = 'src/assets/fotos/gate/'
+        portao_dir = 'src/assets/fotos/gate_campus/'
         fotos_portao = []
         for filename in os.listdir(portao_dir):
             if filename.endswith('.jpeg') or filename.endswith('.jpg'):

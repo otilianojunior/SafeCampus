@@ -69,14 +69,3 @@ class DateUtil:
             return hora_saida
         except Exception as ex:
             raise Exception('Erro: Gerar Horario Saida', ex)
-
-
-# if __name__ == '__main__':
-#     p_hora_certa = 0.1
-#
-#     HORA = DateUtil(p_hora_certa)
-#     for _ in range(1):
-#         hora_entrada = HORA.gerar_horario_entrada()
-#         hora_saida = HORA.gerar_horario_saida(hora_entrada)
-#         print('entrada: ', hora_entrada)
-#         print('saida: ', hora_saida)
