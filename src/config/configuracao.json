@@ -89,6 +89,7 @@
             "idade": "97",
             "escola": "Hogwarts School of Witchcraft and Wizardry",
             "casa": "Slytherin",
+            "tipo": "Suspeito",
             "fotos": [
                 "src/assets/fotos/suspeitos/Voldemort.jpeg",
                 "src/assets/fotos/suspeitos/Voldemort(1).jpeg",
@@ -101,6 +102,7 @@
             "idade": "72",
             "escola": "Hogwarts School of Witchcraft and Wizardry",
             "casa": "Slytherin",
+            "tipo": "Suspeito",
             "fotos": [
                 "src/assets/fotos/suspeitos/Bellatrix.jpeg",
                 "src/assets/fotos/suspeitos/Bellatrix(1).jpeg",
@@ -113,6 +115,7 @@
             "idade": "62",
             "escola": "Hogwarts School of Witchcraft and Wizardry",
             "casa": "Slytherin",
+            "tipo": "Suspeito",
             "fotos": [
                 "src/assets/fotos/suspeitos/Dolores.jpeg",
                 "src/assets/fotos/suspeitos/Dolores(1).jpeg",
@@ -126,6 +129,7 @@
             "nome": "Fleur Isabelle Weasley",
             "idade": "35",
             "escola": "Académie de Magie Beauxbâtons",
+            "tipo": "Visitante",
             "fotos": [
                 "src/assets/fotos/visitantes/Fleur.jpeg",
                 "src/assets/fotos/visitantes/Fleur(1).jpeg",
@@ -137,6 +141,7 @@
             "nome": "Sirius Black III",
             "idade": "64",
             "escola": "Hogwarts School of Witchcraft and Wizardry",
+            "tipo": "Visitante",
             "fotos": [
                 "src/assets/fotos/visitantes/Sirius.jpeg",
                 "src/assets/fotos/visitantes/Sirius(1).jpeg",
@@ -148,6 +153,7 @@
             "nome": "Viktor Krum",
             "idade": "47",
             "escola": "Durmstrang Institut för Magisk Lärande",
+            "tipo": "Visitante",
             "fotos": [
                 "src/assets/fotos/visitantes/Viktor.jpeg",
                 "src/assets/fotos/visitantes/Viktor(1).jpeg",

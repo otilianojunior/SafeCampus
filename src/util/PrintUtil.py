@@ -8,9 +8,10 @@ class PrintUtil:
         print()
 
         for chave, valor in alunos.items():
-            chave = colored.stylize(chave, colored.fg("blue"))
-            valor = colored.stylize(valor, colored.fg("green"))
-            print(f"{chave}: {valor}")
+            if chave != 'fotos':
+                chave = colored.stylize(chave, colored.fg("blue"))
+                valor = colored.stylize(valor, colored.fg("green"))
+                print(f"{chave}: {valor}")
 
         print()
 
@@ -20,9 +21,10 @@ class PrintUtil:
         print()
 
         for chave, valor in professores.items():
-            chave = colored.stylize(chave, colored.fg("blue"))
-            valor = colored.stylize(valor, colored.fg("green"))
-            print(f"{chave}: {valor}")
+            if chave != 'fotos':
+                chave = colored.stylize(chave, colored.fg("blue"))
+                valor = colored.stylize(valor, colored.fg("green"))
+                print(f"{chave}: {valor}")
 
         print()
 
@@ -32,9 +34,10 @@ class PrintUtil:
         print()
 
         for chave, valor in suspeitos.items():
-            chave = colored.stylize(chave, colored.fg("blue"))
-            valor = colored.stylize(valor, colored.fg("green"))
-            print(f"{chave}: {valor}")
+            if chave != 'fotos':
+                chave = colored.stylize(chave, colored.fg("blue"))
+                valor = colored.stylize(valor, colored.fg("green"))
+                print(f"{chave}: {valor}")
 
         print()
 
@@ -44,8 +47,9 @@ class PrintUtil:
         print()
 
         for chave, valor in visitantes.items():
-            chave = colored.stylize(chave, colored.fg("blue"))
-            valor = colored.stylize(valor, colored.fg("green"))
-            print(f"{chave}: {valor}")
+            if chave != 'fotos':
+                chave = colored.stylize(chave, colored.fg("blue"))
+                valor = colored.stylize(valor, colored.fg("green"))
+                print(f"{chave}: {valor}")
 
         print()
