@@ -91,25 +91,7 @@ class SafeCampus:
                 else:
                     print("Individuo reconhecido previamente")
 
-        return (len(individuos) > 0), individuos
-
-    def imprimir_resultados(self, individuo_reconhecido, tipo):
-        try:
-            if individuo_reconhecido[0] is True:
-                if tipo == 'alunos':
-                    PrintUtil.print_alunos(individuo_reconhecido[1])
-
-                elif tipo == 'visitante':
-                    PrintUtil.print_visitantes(individuo_reconhecido[1])
-
-                elif tipo == 'professores':
-                    PrintUtil.print_professores(individuo_reconhecido[1])
-
-                elif tipo == 'suspeito':
-                    PrintUtil.print_suspeitos(individuo_reconhecido[1])
-
-        except Exception as ex:
-            raise Exception('Erro: Imprimir Resultados', ex)
+            return (len(individuos) > 0), individuos
 
     def reconhecer_visitantes(self, ambiente_de_simulacao, foto_portao, configuracao):
         while True:
@@ -125,7 +107,7 @@ class SafeCampus:
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
 
-                    self.imprimir_resultados(individuo, tipo='visitante')
+                    PrintUtil.print_visitantes(individuo)
 
             yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
 
@@ -143,7 +125,7 @@ class SafeCampus:
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
 
-                    self.imprimir_resultados(individuo, tipo='alunos')
+                    PrintUtil.print_alunos(individuo)
 
             yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
 
@@ -161,7 +143,7 @@ class SafeCampus:
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
 
-                    self.imprimir_resultados(individuo, tipo='professores')
+                    PrintUtil.print_professores(individuo)
 
             yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
 
@@ -179,7 +161,7 @@ class SafeCampus:
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
 
-                    self.imprimir_resultados(individuo, tipo='suspeitos')
+                    PrintUtil.print_suspeitos(individuo)
 
             yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
 
