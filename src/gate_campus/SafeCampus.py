@@ -79,10 +79,12 @@ class SafeCampus:
 
                 for foto in fotos:
                     foto = facerec.load_image_file(foto)
-                    caracteristicas = facerec.face_encodings(foto)[0]
-                    reconhecimentos = self.comparar_caracteristicas(caracteristicas_visitante, caracteristicas)
-                    if True in reconhecimentos:
-                        total_de_reconhecimentos += 1
+                    caracteristicas = facerec.face_encodings(foto)
+                    if caracteristicas:
+                        caracteristicas = caracteristicas[0]
+                        reconhecimentos = self.comparar_caracteristicas(caracteristicas_visitante, caracteristicas)
+                        if True in reconhecimentos:
+                            total_de_reconhecimentos += 1
 
                 if total_de_reconhecimentos / len(fotos) >= 0.6:
                     individuos.append(individuo)
@@ -93,11 +95,14 @@ class SafeCampus:
 
     def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada,  configuracao):
         while True:
-            print(f"tentando reconhecer um visitante no portão, {ambiente_de_simulacao.now}")
+            print(f"tentando reconhecer um visitante no portão...")
             ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="visitantes")
             if ocorreram_reconhecimentos:
                 for individuo in individuos:
                     individuo["hora_entrada"] = foto_entrada['hora_entrada']
+
+                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
+                    individuo["tempo_para_liberacao"] = tempo_liberacao
 
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
@@ -108,11 +113,14 @@ class SafeCampus:
 
     def reconhecer_alunos(self, ambiente_de_simulacao, foto_entrada, configuracao):
         while True:
-            print(f"tentando reconhecer um aluno no portão, {ambiente_de_simulacao.now}")
+            print(f"tentando reconhecer um aluno no portão...")
             ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="alunos")
             if ocorreram_reconhecimentos:
                 for individuo in individuos:
                     individuo["hora_entrada"] = foto_entrada['hora_entrada']
+
+                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
+                    individuo["tempo_para_liberacao"] = tempo_liberacao
 
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
@@ -123,11 +131,14 @@ class SafeCampus:
 
     def reconhecer_professores(self, ambiente_de_simulacao, foto_entrada, configuracao):
         while True:
-            print(f"tentando reconhecer um professor no portão, {ambiente_de_simulacao.now}")
+            print(f"tentando reconhecer um professor no portão...")
             ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="professores")
             if ocorreram_reconhecimentos:
                 for individuo in individuos:
                     individuo["hora_entrada"] = foto_entrada['hora_entrada']
+
+                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
+                    individuo["tempo_para_liberacao"] = tempo_liberacao
 
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
@@ -138,11 +149,14 @@ class SafeCampus:
 
     def reconhecer_suspeitos(self, ambiente_de_simulacao, foto_entrada, configuracao):
         while True:
-            print(f"tentando reconhecer um suspeito no portão em {ambiente_de_simulacao.now}")
+            print(f"tentando reconhecer um suspeito no portão...")
             ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="suspeitos")
             if ocorreram_reconhecimentos:
                 for individuo in individuos:
                     individuo["hora_entrada"] = foto_entrada['hora_entrada']
+
+                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
+                    individuo["tempo_para_liberacao"] = tempo_liberacao
 
                     id_atendimento = secrets.token_hex(nbytes=16).upper()
                     self.individuos_registrados[id_atendimento] = individuo
