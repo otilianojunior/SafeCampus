@@ -22,10 +22,7 @@ if __name__ == "__main__":
     safe_campus.TEMPO_DETECCAO_INDIVIDUOS = 40
 
     ambiente_de_simulacao = simpy.Environment()
-    ambiente_de_simulacao.process(safe_campus.reconhecer_visitantes(ambiente_de_simulacao, foto_entrada, configuracao, fotos_portao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_alunos(ambiente_de_simulacao, foto_entrada, configuracao, fotos_portao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_suspeitos(ambiente_de_simulacao, foto_entrada, configuracao, fotos_portao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_professores(ambiente_de_simulacao, foto_entrada, configuracao, fotos_portao))
+    ambiente_de_simulacao.process(safe_campus.reconhecer_todas_categorias(ambiente_de_simulacao, foto_entrada, configuracao))
 
     ambiente_de_simulacao.process(safe_campus.simula_saida(ambiente_de_simulacao))
     ambiente_de_simulacao.run(until=2000)

@@ -1,12 +1,11 @@
 import colored
 import random
-import secrets
-import face_recognition as facerec
 from src.util.JsonUtil import JsonUtil
 from src.util.DateUtil import DateUtil
 from src.util.PrintUtil import PrintUtil
 from src.util.FotosUtil import FotosUtil
 from src.config.Configuration import Configuration
+from src.gate_campus.Reconhecedor import Reconhecedor
 
 
 class SafeCampus:
@@ -18,6 +17,7 @@ class SafeCampus:
         self.TEMPO_MEDIO_PERMANENCIA = None
         self.TEMPO_DETECCAO_INDIVIDUOS = None
         self.TEMPO_LIBERACAO_INDIVIDUOS = None
+        self.fotos_portao = None
 
     def load_config(self):
         try:
@@ -38,9 +38,10 @@ class SafeCampus:
 
     def simular_entrada(self, fotos_portao):
         try:
+            self.fotos_portao = fotos_portao
             date_util = DateUtil(p_hora_certa=0.5)
             hora_entrada = date_util.gerar_horario_entrada()
-            foto = random.choice(fotos_portao)
+            foto = random.choice(self.fotos_portao)
             print(f'Foto escolhida para entrada: {foto}')
             foto_entrada = {
                 "foto": foto,
@@ -50,120 +51,40 @@ class SafeCampus:
         except Exception as ex:
             raise Exception('Erro: simular entrada', ex)
 
-    def individuo_reconhecido_anteriormente(self, foto_entrada):
-        reconhecido_previamente = False
-        for reconhecido in self.individuos_registrados.values():
-            if foto_entrada["codigo"] == reconhecido["codigo"]:
-                reconhecido_previamente = True
-                break
-        return reconhecido_previamente
+    def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
+        resultados = []
 
-    def carregar_caracteristicas_rosto(self, foto_entrada):
-        foto_individuo = facerec.load_image_file(foto_entrada["foto"])
-        caracteristicas_visitante = facerec.face_encodings(foto_individuo)
-        return caracteristicas_visitante
+        categorias = ["visitantes", "alunos", "professores", "suspeitos"]
 
-    def comparar_caracteristicas(self, caracteristicas_visitante, caracteristicas_registradas):
-        reconhecimentos = facerec.compare_faces(caracteristicas_visitante, caracteristicas_registradas)
-        return reconhecimentos
+        for categoria in categorias:
+            resultados.extend(
+                list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
 
-    def reconhecer_individuos(self, foto_entrada, configuracao, categoria):
-        print("realizando reconhecimento de individuos...")
-        caracteristicas_visitante = self.carregar_caracteristicas_rosto(foto_entrada)
+        novo_foto_entrada = self.simular_entrada(self.fotos_portao)
+        resultados.extend(
+            list(self.reconhecer_todas_categorias(ambiente_de_simulacao, novo_foto_entrada, configuracao)))
 
-        individuos = []
-        for individuo in configuracao[categoria]:
-            if not self.individuo_reconhecido_anteriormente(individuo):
-                fotos = individuo["fotos"]
-                total_de_reconhecimentos = 0
+        return resultados
 
-                for foto in fotos:
-                    foto = facerec.load_image_file(foto)
-                    caracteristicas = facerec.face_encodings(foto)
-                    if caracteristicas:
-                        caracteristicas = caracteristicas[0]
-                        reconhecimentos = self.comparar_caracteristicas(caracteristicas_visitante, caracteristicas)
-                        if True in reconhecimentos:
-                            total_de_reconhecimentos += 1
-
-                if total_de_reconhecimentos / len(fotos) >= 0.6:
-                    individuos.append(individuo)
-            else:
-                print("Individuo reconhecido previamente")
-
-        return (len(individuos) > 0), individuos
-
-    def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada,  configuracao):
-        while True:
-            print(f"tentando reconhecer um visitante no portão...")
-            ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="visitantes")
-            if ocorreram_reconhecimentos:
-                for individuo in individuos:
-                    individuo["hora_entrada"] = foto_entrada['hora_entrada']
-
-                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
-                    individuo["tempo_para_liberacao"] = tempo_liberacao
-
-                    id_atendimento = secrets.token_hex(nbytes=16).upper()
-                    self.individuos_registrados[id_atendimento] = individuo
-
-                    PrintUtil.print_visitantes(individuo)
-
-            yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
+    def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada, configuracao):
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        print_function = PrintUtil.print_visitantes
+        yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "visitantes", print_function)
 
     def reconhecer_alunos(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        while True:
-            print(f"tentando reconhecer um aluno no portão...")
-            ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="alunos")
-            if ocorreram_reconhecimentos:
-                for individuo in individuos:
-                    individuo["hora_entrada"] = foto_entrada['hora_entrada']
-
-                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
-                    individuo["tempo_para_liberacao"] = tempo_liberacao
-
-                    id_atendimento = secrets.token_hex(nbytes=16).upper()
-                    self.individuos_registrados[id_atendimento] = individuo
-
-                    PrintUtil.print_alunos(individuo)
-
-            yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        print_function = PrintUtil.print_alunos
+        yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "alunos", print_function)
 
     def reconhecer_professores(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        while True:
-            print(f"tentando reconhecer um professor no portão...")
-            ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="professores")
-            if ocorreram_reconhecimentos:
-                for individuo in individuos:
-                    individuo["hora_entrada"] = foto_entrada['hora_entrada']
-
-                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
-                    individuo["tempo_para_liberacao"] = tempo_liberacao
-
-                    id_atendimento = secrets.token_hex(nbytes=16).upper()
-                    self.individuos_registrados[id_atendimento] = individuo
-
-                    PrintUtil.print_professores(individuo)
-
-            yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        print_function = PrintUtil.print_professores
+        yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "professores", print_function)
 
     def reconhecer_suspeitos(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        while True:
-            print(f"tentando reconhecer um suspeito no portão...")
-            ocorreram_reconhecimentos, individuos = self.reconhecer_individuos(foto_entrada, configuracao, categoria="suspeitos")
-            if ocorreram_reconhecimentos:
-                for individuo in individuos:
-                    individuo["hora_entrada"] = foto_entrada['hora_entrada']
-
-                    tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
-                    individuo["tempo_para_liberacao"] = tempo_liberacao
-
-                    id_atendimento = secrets.token_hex(nbytes=16).upper()
-                    self.individuos_registrados[id_atendimento] = individuo
-
-                    PrintUtil.print_suspeitos(individuo)
-
-            yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        print_function = PrintUtil.print_suspeitos
+        yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "suspeitos", print_function)
 
     def simula_saida(self, ambiente_de_simulacao):
         while True:
@@ -179,3 +100,4 @@ class SafeCampus:
                                   f"O {individuo['tipo']} {individuo['nome']} saiu as ", colored.attr('reset'))
 
             yield ambiente_de_simulacao.timeout(self.TEMPO_LIBERACAO_INDIVIDUOS)
+
