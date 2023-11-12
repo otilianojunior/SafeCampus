@@ -53,3 +53,9 @@ class PrintUtil:
                 print(f"{chave}: {valor}")
 
         print()
+
+    @staticmethod
+    def print_saida(tipo, nome, hora_saida):
+        print(colored.fg('white'), colored.bg('green'),
+              f"O {tipo} {nome} saiu às {hora_saida}", colored.attr('reset'))
+        print()

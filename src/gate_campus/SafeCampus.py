@@ -88,16 +88,15 @@ class SafeCampus:
 
     def simula_saida(self, ambiente_de_simulacao):
         while True:
-            print(f"Individuo saindo da instituição em {ambiente_de_simulacao.now}")
-
             if len(self.individuos_registrados):
                 for id_atendimento, individuo in list(self.individuos_registrados.items()):
                     if ambiente_de_simulacao.now >= individuo["tempo_para_liberacao"]:
                         individuo_saiu = (random.randint(1, 100)) <= self.PROBABILIDADE_SAIDA
                         if individuo_saiu:
                             self.individuos_registrados.pop(id_atendimento)
+
                             print(colored.fg('white'), colored.bg('green'),
-                                  f"O {individuo['tipo']} {individuo['nome']} saiu as ", colored.attr('reset'))
+                                  f"O {individuo['tipo']} {individuo['nome']} saiu as ", colored.attr('reset') +'no ambiente de simulação: {ambiente_de_simulacao.now}')
 
             yield ambiente_de_simulacao.timeout(self.TEMPO_LIBERACAO_INDIVIDUOS)
 
