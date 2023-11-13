@@ -1,4 +1,3 @@
-import colored
 import random
 from src.util.JsonUtil import JsonUtil
 from src.util.DateUtil import DateUtil
@@ -18,6 +17,7 @@ class SafeCampus:
         self.TEMPO_DETECCAO_INDIVIDUOS = None
         self.TEMPO_LIBERACAO_INDIVIDUOS = None
         self.fotos_portao = None
+        self.DIR_ARQUIVO_HORARIOS = config.ARQUIVO_HORARIOS
 
     def load_config(self):
         try:
@@ -39,31 +39,31 @@ class SafeCampus:
     def simular_entrada(self, fotos_portao):
         try:
             self.fotos_portao = fotos_portao
-            hora_entrada = DateUtil().gerar_horario_entrada()
-            foto = random.choice(self.fotos_portao)
-            print(f'Foto escolhida para entrada: {foto}')
             foto_entrada = {
-                "foto": foto,
-                "hora_entrada": hora_entrada
+                "foto": random.choice(self.fotos_portao),
+                "hora_entrada": DateUtil().gerar_horario_entrada()
             }
+            PrintUtil.print_foto_entrada(foto_entrada)
             return foto_entrada
         except Exception as ex:
             raise Exception('Erro: simular entrada', ex)
 
     def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        resultados = []
-
         categorias = ["visitantes", "alunos", "professores", "suspeitos"]
 
         for categoria in categorias:
-            resultados.extend(
-                list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
+            yield from getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)
 
-        novo_foto_entrada = self.simular_entrada(self.fotos_portao)
-        resultados.extend(
-            list(self.reconhecer_todas_categorias(ambiente_de_simulacao, novo_foto_entrada, configuracao)))
-
-        return resultados
+    # def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
+    #     resultados = []
+    #     categorias = ["visitantes", "alunos", "professores", "suspeitos"]
+    #     for categoria in categorias:
+    #         resultados.extend(
+    #             list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
+    #     novo_foto_entrada = self.simular_entrada(self.fotos_portao)
+    #     resultados.extend(
+    #         list(self.reconhecer_todas_categorias(ambiente_de_simulacao, novo_foto_entrada, configuracao)))
+    #     return resultados
 
     def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada, configuracao):
         reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
@@ -84,3 +84,24 @@ class SafeCampus:
         reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_suspeitos
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "suspeitos", print_function)
+
+    def simular_saida(self, ambiente_de_simulacao):
+        while True:
+            print(f"Indivíduo tentando sair da instituição em {ambiente_de_simulacao.now}")
+
+            if len(self.individuos_registrados):
+                for id_atendimento, individuo in list(self.individuos_registrados.items()):
+                    if individuo["tempo_para_liberacao"] and ambiente_de_simulacao.now >= individuo["tempo_para_liberacao"]:
+                        individuo_saiu = (random.randint(1, 100)) >= self.PROBABILIDADE_SAIDA
+                        if individuo_saiu:
+                            date_util = DateUtil()
+                            hora_entrada = individuo['hora_entrada']
+                            individuo['hora_saida'] = date_util.gerar_horario_saida(hora_entrada)
+                            PrintUtil.print_saida(individuo)
+
+                            json_util = JsonUtil(self.DIR_ARQUIVO_HORARIOS)
+                            json_util.salvar_dados(individuo)
+
+                            del self.individuos_registrados[id_atendimento]
+
+            yield ambiente_de_simulacao.timeout(self.TEMPO_LIBERACAO_INDIVIDUOS)

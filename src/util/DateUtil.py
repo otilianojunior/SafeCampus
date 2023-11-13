@@ -37,18 +37,19 @@ class DateUtil:
     def gerar_horario_saida(self, hora_entrada):
         try:
             turnos = self.turnos_entrada()
-            horario_saida_maximo = None
 
-            if hora_entrada == turnos["manha"][0]:
-                hora_saida = turnos["manha"][1]
+            # Encontrar o turno correspondente à hora de entrada
+            turno_correspondente = None
+            for turno, intervalo in turnos.items():
+                if intervalo[0] <= hora_entrada <= intervalo[1]:
+                    turno_correspondente = turno
+                    break
 
-            elif hora_entrada == turnos["tarde"][0]:
-                hora_saida = turnos["tarde"][1]
-
-            elif hora_entrada == turnos["noite"][0]:
-                hora_saida = turnos["noite"][1]
-
+            if turno_correspondente is not None:
+                hora_saida = turnos[turno_correspondente][1]
             else:
+                # Se não houver correspondência direta com um turno, gerar aleatoriamente
+                horario_saida_maximo = None
                 if turnos["manha"][0] <= hora_entrada < turnos["manha"][1]:
                     horario_saida_maximo = turnos["manha"][1]
 

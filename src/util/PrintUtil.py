@@ -2,6 +2,14 @@ import colored
 
 
 class PrintUtil:
+
+    @staticmethod
+    def print_foto_entrada(foto_entrada):
+        nome_arquivo = foto_entrada['foto'].split('/')[-1].split('.')[0]
+        print(colored.stylize(f"Foto da Entrada: {nome_arquivo}, Dia e Hora: {foto_entrada['hora_entrada']}", colored.bg("yellow") + colored.fg("black")))
+        print()
+
+
     @staticmethod
     def print_alunos(alunos):
         print(colored.stylize("Aluno reconhecido:", colored.bg("yellow") + colored.fg("black")))
@@ -55,7 +63,6 @@ class PrintUtil:
         print()
 
     @staticmethod
-    def print_saida(tipo, nome, hora_saida):
-        print(colored.fg('white'), colored.bg('green'),
-              f"O {tipo} {nome} saiu às {hora_saida}", colored.attr('reset'))
+    def print_saida(individuo):
+        print(colored.stylize(f"O(A) {individuo['tipo']}(a), {individuo['nome']} saiu às {individuo['hora_saida']}", colored.bg("green") + colored.fg("white")))
         print()
