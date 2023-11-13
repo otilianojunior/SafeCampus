@@ -49,14 +49,14 @@ class SafeCampus:
             raise Exception('Erro: simular entrada', ex)
 
     def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        categorias = ["visitantes", "alunos", "professores", "suspeitos"]
+        categorias = ["alunos", "professores", "suspeitos", "visitantes"]
 
         for categoria in categorias:
             yield from getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)
 
     # def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
     #     resultados = []
-    #     categorias = ["visitantes", "alunos", "professores", "suspeitos"]
+    #     categorias = ["alunos", "professores", "suspeitos", "visitantes"]
     #     for categoria in categorias:
     #         resultados.extend(
     #             list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
@@ -64,11 +64,6 @@ class SafeCampus:
     #     resultados.extend(
     #         list(self.reconhecer_todas_categorias(ambiente_de_simulacao, novo_foto_entrada, configuracao)))
     #     return resultados
-
-    def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
-        print_function = PrintUtil.print_visitantes
-        yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "visitantes", print_function)
 
     def reconhecer_alunos(self, ambiente_de_simulacao, foto_entrada, configuracao):
         reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
@@ -84,6 +79,11 @@ class SafeCampus:
         reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_suspeitos
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "suspeitos", print_function)
+
+    def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada, configuracao):
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
+        print_function = PrintUtil.print_visitantes
+        yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "visitantes", print_function)
 
     def simular_saida(self, ambiente_de_simulacao):
         while True:
