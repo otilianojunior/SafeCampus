@@ -16,6 +16,7 @@ class Reconhecedor:
         if ocorreram_reconhecimentos:
             for individuo in individuos:
                 individuo["hora_entrada"] = foto_entrada['hora_entrada']
+                individuo["dia"] = foto_entrada['dia']
 
                 tempo_liberacao = ambiente_de_simulacao.now + self.TEMPO_MEDIO_PERMANENCIA
                 individuo["tempo_para_liberacao"] = tempo_liberacao

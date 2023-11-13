@@ -48,6 +48,7 @@ class JsonUtil:
                 'codigo': individuo['codigo'],
                 'nome': individuo['nome'],
                 'categoria': individuo['tipo'],
+                'dia': individuo['dia'],
                 'hora_entrada': individuo['hora_entrada'].strftime('%H:%M:%S'),
                 'hora_saida': individuo['hora_saida'].strftime('%H:%M:%S'),
             }

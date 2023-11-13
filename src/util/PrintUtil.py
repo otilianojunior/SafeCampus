@@ -6,7 +6,7 @@ class PrintUtil:
     @staticmethod
     def print_foto_entrada(foto_entrada):
         nome_arquivo = foto_entrada['foto'].split('/')[-1].split('.')[0]
-        print(colored.stylize(f"Foto da Entrada: {nome_arquivo}, Dia e Hora: {foto_entrada['hora_entrada']}", colored.bg("yellow") + colored.fg("black")))
+        print(colored.stylize(f"Foto da Entrada: {nome_arquivo}, Dia: {foto_entrada['dia']} e Hora: {foto_entrada['hora_entrada']}", colored.bg("yellow") + colored.fg("black")))
         print()
 
 
@@ -64,5 +64,5 @@ class PrintUtil:
 
     @staticmethod
     def print_saida(individuo):
-        print(colored.stylize(f"O(A) {individuo['tipo']}(a), {individuo['nome']} saiu às {individuo['hora_saida']}", colored.bg("green") + colored.fg("white")))
+        print(colored.stylize(f"O(A) {individuo['tipo']}(a), {individuo['nome']} saiu às {individuo['hora_saida']} do dia {individuo['dia']}", colored.bg("green") + colored.fg("white")))
         print()

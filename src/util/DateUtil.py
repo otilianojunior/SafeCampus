@@ -1,8 +1,21 @@
 from datetime import time
 import random
+import calendar
 
 
 class DateUtil:
+
+    def gerar_data(self):
+        try:
+            ano = random.randint(1900, 2023)
+            mes = random.randint(1, 12)
+            dias_no_mes = calendar.monthrange(ano, mes)[1]
+            dia = random.randint(1, dias_no_mes)
+
+            return f"{dia:02d}/{mes:02d}/{ano}"
+        except Exception as ex:
+            raise Exception('Erro: Gerar Data Dia da Semana', ex)
+
     def turnos_entrada(self):
         try:
             turnos = {

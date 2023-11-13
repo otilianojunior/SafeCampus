@@ -41,7 +41,8 @@ class SafeCampus:
             self.fotos_portao = fotos_portao
             foto_entrada = {
                 "foto": random.choice(self.fotos_portao),
-                "hora_entrada": DateUtil().gerar_horario_entrada()
+                "hora_entrada": DateUtil().gerar_horario_entrada(),
+                "dia": DateUtil().gerar_data()
             }
             PrintUtil.print_foto_entrada(foto_entrada)
             return foto_entrada
