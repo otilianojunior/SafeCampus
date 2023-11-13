@@ -39,8 +39,7 @@ class SafeCampus:
     def simular_entrada(self, fotos_portao):
         try:
             self.fotos_portao = fotos_portao
-            date_util = DateUtil(p_hora_certa=0.5)
-            hora_entrada = date_util.gerar_horario_entrada()
+            hora_entrada = DateUtil().gerar_horario_entrada()
             foto = random.choice(self.fotos_portao)
             print(f'Foto escolhida para entrada: {foto}')
             foto_entrada = {
@@ -67,36 +66,21 @@ class SafeCampus:
         return resultados
 
     def reconhecer_visitantes(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_visitantes
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "visitantes", print_function)
 
     def reconhecer_alunos(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_alunos
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "alunos", print_function)
 
     def reconhecer_professores(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_professores
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "professores", print_function)
 
     def reconhecer_suspeitos(self, ambiente_de_simulacao, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS)
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_suspeitos
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "suspeitos", print_function)
-
-    def simula_saida(self, ambiente_de_simulacao):
-        while True:
-            if len(self.individuos_registrados):
-                for id_atendimento, individuo in list(self.individuos_registrados.items()):
-                    if ambiente_de_simulacao.now >= individuo["tempo_para_liberacao"]:
-                        individuo_saiu = (random.randint(1, 100)) <= self.PROBABILIDADE_SAIDA
-                        if individuo_saiu:
-                            self.individuos_registrados.pop(id_atendimento)
-
-                            print(colored.fg('white'), colored.bg('green'),
-                                  f"O {individuo['tipo']} {individuo['nome']} saiu as ", colored.attr('reset') +'no ambiente de simulação: {ambiente_de_simulacao.now}')
-
-            yield ambiente_de_simulacao.timeout(self.TEMPO_LIBERACAO_INDIVIDUOS)
-

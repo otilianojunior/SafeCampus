@@ -3,9 +3,6 @@ import random
 
 
 class DateUtil:
-    def __init__(self, p_hora_certa):
-        self.hora_certa = p_hora_certa
-
     def turnos_entrada(self):
         try:
             turnos = {
@@ -25,7 +22,7 @@ class DateUtil:
             turno_escolhido = random.choice(list(turnos.keys()))
             inicio, fim = turnos[turno_escolhido]
 
-            if random.uniform(0, 1) <= self.hora_certa:
+            if random.uniform(0, 1) <= 0.5:
                 hora_entrada = inicio
             else:
                 while True:

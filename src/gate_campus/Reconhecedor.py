@@ -1,12 +1,15 @@
 import face_recognition as facerec
 import secrets
+import random
 
 
 class Reconhecedor:
-    def __init__(self, individuos_registrados, TEMPO_MEDIO_PERMANENCIA, TEMPO_DETECCAO_INDIVIDUOS):
+    def __init__(self, individuos_registrados, TEMPO_MEDIO_PERMANENCIA, TEMPO_DETECCAO_INDIVIDUOS, PROBABILIDADE_SAIDA):
         self.individuos_registrados = individuos_registrados
         self.TEMPO_MEDIO_PERMANENCIA = TEMPO_MEDIO_PERMANENCIA
         self.TEMPO_DETECCAO_INDIVIDUOS = TEMPO_DETECCAO_INDIVIDUOS
+        self.PROBABILIDADE_SAIDA = PROBABILIDADE_SAIDA
+
 
     def reconhecer_individuos(self, ambiente_de_simulacao, foto_entrada, configuracao, categoria, print_function):
         print(f"tentando reconhecer {categoria} no portão...")
@@ -26,7 +29,6 @@ class Reconhecedor:
                 yield individuo
 
         yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
-
 
     def reconhecer_individuos_aux(self, foto_entrada, configuracao, categoria):
         caracteristicas_visitante = self.carregar_caracteristicas_rosto(foto_entrada)
@@ -49,9 +51,10 @@ class Reconhecedor:
                 if total_de_reconhecimentos / len(fotos) >= 0.6:
                     individuos.append(individuo)
             else:
-                print("Individuo reconhecido previamente")
+                print("Indivíduo reconhecido previamente")
+                self.removendo_inferno(configuracao, categoria)
 
-        return (len(individuos) > 0), individuos
+        return True, individuos
 
     def individuo_reconhecido_anteriormente(self, foto_entrada):
         reconhecido_previamente = False
@@ -60,6 +63,15 @@ class Reconhecedor:
                 reconhecido_previamente = True
                 break
         return reconhecido_previamente
+
+    def removendo_inferno(self, configuracao, categoria):
+        for id_atendimento, reconhecido in list(self.individuos_registrados.items()):
+            if (random.randint(1, 100)) >= self.PROBABILIDADE_SAIDA:
+                for individuo_configuracao in configuracao[categoria]:
+                    if "codigo" in individuo_configuracao and individuo_configuracao["codigo"] == reconhecido.get("codigo"):
+                        del self.individuos_registrados[id_atendimento]
+                        print(f"Indivíduo removido da categoria {categoria}: " + reconhecido.get('nome', 'Nome desconhecido'))
+                        break
 
     def carregar_caracteristicas_rosto(self, foto_entrada):
         foto_individuo = facerec.load_image_file(foto_entrada["foto"])
