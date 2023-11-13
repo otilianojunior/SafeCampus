@@ -16,14 +16,17 @@ if __name__ == "__main__":
     suspeitos = safe_campus.load_fotos(config.DIR_FOTOS_SUSPEITOS)
     visitantes = safe_campus.load_fotos(config.DIR_FOTOS_VISITANTES)
 
-    safe_campus.PROBABILIDADE_SAIDA = 20
+    safe_campus.PROBABILIDADE_SAIDA = 55
     safe_campus.TEMPO_MEDIO_PERMANENCIA = 60
     safe_campus.TEMPO_LIBERACAO_INDIVIDUOS = 60
     safe_campus.TEMPO_DETECCAO_INDIVIDUOS = 40
 
     ambiente_de_simulacao = simpy.Environment()
+    ambiente_de_simulacao.process(safe_campus.reconhecer_alunos(ambiente_de_simulacao, foto_entrada, configuracao))
+    ambiente_de_simulacao.process(safe_campus.reconhecer_professores(ambiente_de_simulacao, foto_entrada, configuracao))
+    ambiente_de_simulacao.process(safe_campus.reconhecer_suspeitos(ambiente_de_simulacao, foto_entrada, configuracao))
+    ambiente_de_simulacao.process(safe_campus.reconhecer_visitantes(ambiente_de_simulacao, foto_entrada, configuracao))
+    ambiente_de_simulacao.process(safe_campus.simular_saida(ambiente_de_simulacao, configuracao))
 
-    ambiente_de_simulacao.process(safe_campus.reconhecer_todas_categorias(ambiente_de_simulacao, foto_entrada, configuracao))
-    ambiente_de_simulacao.process(safe_campus.simular_saida(ambiente_de_simulacao))
-    ambiente_de_simulacao.run(until=2000)
+    ambiente_de_simulacao.run(until=500)
 

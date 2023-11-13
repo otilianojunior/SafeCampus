@@ -49,21 +49,14 @@ class SafeCampus:
             raise Exception('Erro: simular entrada', ex)
 
     def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
+        resultados = []
+
         categorias = ["alunos", "professores", "suspeitos", "visitantes"]
 
         for categoria in categorias:
-            yield from getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)
+            resultados.extend(list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
 
-    # def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
-    #     resultados = []
-    #     categorias = ["alunos", "professores", "suspeitos", "visitantes"]
-    #     for categoria in categorias:
-    #         resultados.extend(
-    #             list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
-    #     novo_foto_entrada = self.simular_entrada(self.fotos_portao)
-    #     resultados.extend(
-    #         list(self.reconhecer_todas_categorias(ambiente_de_simulacao, novo_foto_entrada, configuracao)))
-    #     return resultados
+        return resultados
 
     def reconhecer_alunos(self, ambiente_de_simulacao, foto_entrada, configuracao):
         reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
@@ -85,7 +78,7 @@ class SafeCampus:
         print_function = PrintUtil.print_visitantes
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "visitantes", print_function)
 
-    def simular_saida(self, ambiente_de_simulacao):
+    def simular_saida(self, ambiente_de_simulacao, configuracao):
         while True:
             print(f"Indivíduo tentando sair da instituição em {ambiente_de_simulacao.now}")
 
@@ -103,5 +96,7 @@ class SafeCampus:
                             json_util.salvar_dados(individuo)
 
                             del self.individuos_registrados[id_atendimento]
-
+                        else:
+                            novo_foto_entrada = self.simular_entrada(self.fotos_portao)
+                            yield from self.reconhecer_todas_categorias(ambiente_de_simulacao, novo_foto_entrada, configuracao)
             yield ambiente_de_simulacao.timeout(self.TEMPO_LIBERACAO_INDIVIDUOS)
