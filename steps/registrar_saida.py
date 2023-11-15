@@ -18,10 +18,9 @@ def when_foto_capturada_registro(contexto, foto):
     assert contexto.foto_entrada is not None
 
 
-@Then('o individuo que entrou na instituicao saiu e foram registrados o horarios')
-def the_registra_horario(contexto):
+@Then('o individuo que entrou na instituicao tem a probabilidade {probabilidade} de sair, e ser registrados seus horarios de entrada e saida')
+def the_registra_horario(contexto, probabilidade):
     ocorreram_reconhecimentos, contexto.alunos_reconhecidos, contexto.individuos_registrados = SafeCampus().reconhecer_alunos(contexto.foto_entrada, contexto.configuracao)
-    PROBABILIDADE_SAIDA = 100
-    contexto.individuo_saiu = SafeCampus().simular_saida(contexto.individuos_registrados, PROBABILIDADE_SAIDA)
+    contexto.individuo_saiu = SafeCampus().simular_saida(contexto.individuos_registrados, int(probabilidade))
 
     assert contexto.individuo_saiu is True
