@@ -1,0 +1,50 @@
+[
+  {
+    "codigo": "0001",
+    "nome": "Tom Marvolo Riddle",
+    "categoria": "Suspeito",
+    "dia": "25/01/1958",
+    "hora_entrada": "18:30:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "10001",
+    "nome": "Minerva McGonagall ",
+    "categoria": "Professor",
+    "dia": "05/08/1970",
+    "hora_entrada": "14:35:00",
+    "hora_saida": "18:00:00"
+  },
+  {
+    "codigo": "10001",
+    "nome": "Minerva McGonagall ",
+    "categoria": "Professor",
+    "dia": "23/12/1934",
+    "hora_entrada": "18:30:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "10001",
+    "nome": "Minerva McGonagall ",
+    "categoria": "Professor",
+    "dia": "24/03/2004",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "20002",
+    "nome": "Remus John Lupin",
+    "categoria": "Professor",
+    "dia": "24/03/2004",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "30003",
+    "nome": "Severus Snape",
+    "categoria": "Professor",
+    "dia": "24/03/2004",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  }
+]

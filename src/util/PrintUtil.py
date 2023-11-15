@@ -15,7 +15,7 @@ class PrintUtil:
         print()
 
         for chave, valor in alunos.items():
-            if chave != 'fotos':
+            if chave != 'fotos' and chave != 'tempo_para_liberacao':
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
@@ -24,10 +24,9 @@ class PrintUtil:
     @staticmethod
     def print_professores(professores):
         print(colored.stylize("Professor reconhecido:", colored.bg("yellow") + colored.fg("black")))
-        print()
 
         for chave, valor in professores.items():
-            if chave != 'fotos':
+            if chave != 'fotos' and chave != 'tempo_para_liberacao':
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
@@ -39,7 +38,7 @@ class PrintUtil:
         print()
 
         for chave, valor in suspeitos.items():
-            if chave != 'fotos':
+            if chave != 'fotos' and chave != 'tempo_para_liberacao':
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
@@ -51,7 +50,7 @@ class PrintUtil:
         print()
 
         for chave, valor in visitantes.items():
-            if chave != 'fotos':
+            if chave != 'fotos' and chave != 'tempo_para_liberacao':
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")

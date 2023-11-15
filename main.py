@@ -1,4 +1,3 @@
-import simpy
 from src.gate_campus.SafeCampus import SafeCampus
 from src.config.Configuration import Configuration
 
@@ -19,16 +18,12 @@ if __name__ == "__main__":
 
     safe_campus.PROBABILIDADE_SAIDA = 60
     safe_campus.TEMPO_MEDIO_PERMANENCIA = 60
-    safe_campus.TEMPO_LIBERACAO_INDIVIDUOS = 60
-    safe_campus.TEMPO_DETECCAO_INDIVIDUOS = 40
 
-    ambiente_de_simulacao = simpy.Environment()
-    ambiente_de_simulacao.process(safe_campus.reconhecer_alunos(ambiente_de_simulacao, foto_entrada, configuracao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_professores(ambiente_de_simulacao, foto_entrada, configuracao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_suspeitos(ambiente_de_simulacao, foto_entrada, configuracao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_visitantes(ambiente_de_simulacao, foto_entrada, configuracao))
-    ambiente_de_simulacao.process(safe_campus.reconhecer_emergencia(ambiente_de_simulacao, foto_entrada, configuracao))
-    ambiente_de_simulacao.process(safe_campus.simular_saida(ambiente_de_simulacao, configuracao))
+    safe_campus.reconhecer_alunos(foto_entrada, configuracao)
+    safe_campus.reconhecer_professores(foto_entrada, configuracao)
+    safe_campus.reconhecer_suspeitos(foto_entrada, configuracao)
+    safe_campus.reconhecer_visitantes(foto_entrada, configuracao)
+    safe_campus.reconhecer_emergencia(foto_entrada, configuracao)
+    safe_campus.simular_saida()
 
-    ambiente_de_simulacao.run(until=500)
 
