@@ -53,3 +53,8 @@ pip install -r requirements.txt
  behave reconhecer_aluno.feature reconhecer_emergencia.feature reconhecer_professor.feature reconhecer_suspeito.feature reconhecer_visitante.feature registrar_saida.feature 
 
 ```
+*OBS: caso tenha executado a main antes desse projeto é necessário atualizar os requirements.txt
+
+```
+pip install -r requirements.txt
+```
