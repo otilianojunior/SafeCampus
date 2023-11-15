@@ -1,5 +1,5 @@
 # SafeCampus
-> Status do Projeto: Em andamento :heavy_check_mark:
+> Status do Projeto: Concluído :heavy_check_mark:
 
 ### Descrição
 - <p align="justify">Sistema de segurança e monitoramento que supervisiona o acesso à instituição de ensino, proporcionando um controle eficiente e preciso da entrada de alunos e servidores, registrando a presença de forma sistemática e confiável, incluindo o horário de entrada e saída de cada pessoa. Além disso, o sistema é capaz de rastrear a entrada de visitantes, enquanto realiza verificações em tempo real para identificar qualquer pessoa que possa levantar suspeitas. Também integra o processo de 'Alertas de Emergência'.
