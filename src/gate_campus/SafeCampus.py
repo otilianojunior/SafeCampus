@@ -14,7 +14,6 @@ class SafeCampus:
         self.DIR_ARQUIVO_HORARIOS = config.ARQUIVO_HORARIOS
         self.individuos_registrados = {}
         self.PROBABILIDADE_SAIDA = None
-        self.TEMPO_MEDIO_PERMANENCIA = None
         self.fotos_portao = None
 
     def load_config(self):
@@ -58,34 +57,34 @@ class SafeCampus:
         return resultados
 
     def reconhecer_alunos(self, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA)
+        reconhecedor = Reconhecedor(self.individuos_registrados)
         print_function = PrintUtil.print_alunos
         return reconhecedor.reconhecer_individuos(foto_entrada, configuracao, "alunos", print_function)
 
     def reconhecer_professores(self, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA)
+        reconhecedor = Reconhecedor(self.individuos_registrados)
         print_function = PrintUtil.print_professores
         return reconhecedor.reconhecer_individuos(foto_entrada, configuracao, "professores", print_function)
 
     def reconhecer_suspeitos(self, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA)
+        reconhecedor = Reconhecedor(self.individuos_registrados)
         print_function = PrintUtil.print_suspeitos
         return reconhecedor.reconhecer_individuos(foto_entrada, configuracao, "suspeitos", print_function)
 
     def reconhecer_visitantes(self, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA)
+        reconhecedor = Reconhecedor(self.individuos_registrados)
         print_function = PrintUtil.print_visitantes
         return reconhecedor.reconhecer_individuos(foto_entrada, configuracao, "visitantes", print_function)
 
     def reconhecer_emergencia(self, foto_entrada, configuracao):
-        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA)
+        reconhecedor = Reconhecedor(self.individuos_registrados)
         print_function = PrintUtil.print_emergencia
         return reconhecedor.reconhecer_emergencia_total(foto_entrada, configuracao, print_function)
 
-    def simular_saida(self):
-        if len(self.individuos_registrados):
-            for id_atendimento, individuo in list(self.individuos_registrados.items()):
-                individuo_saiu = (random.randint(1, 100)) >= self.PROBABILIDADE_SAIDA
+    def simular_saida(self, individuos_registrados, PROBABILIDADE_SAIDA):
+        if len(individuos_registrados):
+            for id_atendimento, individuo in list(individuos_registrados.items()):
+                individuo_saiu = (random.randint(1, 100)) <= PROBABILIDADE_SAIDA
                 if individuo_saiu:
                     date_util = DateUtil()
                     hora_entrada = individuo['hora_entrada']
@@ -94,5 +93,6 @@ class SafeCampus:
 
                     json_util = JsonUtil(self.DIR_ARQUIVO_HORARIOS)
                     json_util.salvar_dados(individuo)
+                    del individuos_registrados[id_atendimento]
 
-                    del self.individuos_registrados[id_atendimento]
+                return individuo_saiu

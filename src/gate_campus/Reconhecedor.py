@@ -3,9 +3,8 @@ import secrets
 
 
 class Reconhecedor:
-    def __init__(self, individuos_registrados, TEMPO_MEDIO_PERMANENCIA):
+    def __init__(self, individuos_registrados):
         self.individuos_registrados = individuos_registrados
-        self.TEMPO_MEDIO_PERMANENCIA = TEMPO_MEDIO_PERMANENCIA
 
     def reconhecer_individuos(self, foto_entrada, configuracao, categoria, print_function):
         print(f"tentando reconhecer {categoria} no portão...")
@@ -16,11 +15,10 @@ class Reconhecedor:
                 individuo["hora_entrada"] = foto_entrada['hora_entrada']
                 individuo["dia"] = foto_entrada['dia']
 
-                individuo["tempo_para_liberacao"] = self.TEMPO_MEDIO_PERMANENCIA
-
                 id_atendimento = secrets.token_hex(nbytes=16).upper()
                 self.individuos_registrados[id_atendimento] = individuo
                 print_function(individuo)
+        return ocorreram_reconhecimentos, individuos, self.individuos_registrados
 
     def reconhecer_individuos_aux(self, foto_entrada, configuracao, categoria):
         caracteristicas_visitante = self.carregar_caracteristicas_rosto(foto_entrada)
@@ -62,6 +60,8 @@ class Reconhecedor:
         if ocorreram_reconhecimentos:
             for individuo in individuos:
                 print_function(individuo)
+
+        return ocorreram_reconhecimentos, individuos
 
     def carregar_caracteristicas_rosto(self, foto_entrada):
         foto_individuo = facerec.load_image_file(foto_entrada["foto"])
