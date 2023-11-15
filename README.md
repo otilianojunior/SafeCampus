@@ -47,8 +47,9 @@ pip install -r requirements.txt
 
 <p align="justify">Crie seu arquivo .env copiando o conteúdo do arquivo .env.example, lembre-se que se suas fotos estiverem  em outro diretório será necessário fazer alterações nesses caminhos. </p>
 
-<p align="justify">E por fim execute o arquivo main.py na raiz do projeto:</p>
+<p align="justify">E para executar o código cole esse comando no terminal do projeto</p>
 
 ```
-python3 main.py
+ behave reconhecer_aluno.feature reconhecer_emergencia.feature reconhecer_professor.feature reconhecer_suspeito.feature reconhecer_visitante.feature registrar_saida.feature 
+
 ```
