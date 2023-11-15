@@ -1,0 +1,146 @@
+[
+  {
+    "codigo": "2023001",
+    "nome": "Harry James Potter",
+    "categoria": "Aluno",
+    "dia": "02/02/2001",
+    "hora_entrada": "08:22:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023002",
+    "nome": "Hermione Jean Granger",
+    "categoria": "Aluno",
+    "dia": "02/02/2001",
+    "hora_entrada": "08:22:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "0001",
+    "nome": "Tom Marvolo Riddle",
+    "categoria": "Suspeito",
+    "dia": "21/03/1957",
+    "hora_entrada": "18:30:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "9992",
+    "nome": "Sirius Black III",
+    "categoria": "Visitante",
+    "dia": "21/03/1957",
+    "hora_entrada": "18:30:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "9991",
+    "nome": "Fleur Isabelle Weasley",
+    "categoria": "Visitante",
+    "dia": "21/03/1957",
+    "hora_entrada": "18:30:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "2023001",
+    "nome": "Harry James Potter",
+    "categoria": "Aluno",
+    "dia": "14/02/1993",
+    "hora_entrada": "17:18:00",
+    "hora_saida": "18:00:00"
+  },
+  {
+    "codigo": "9993",
+    "nome": "Viktor Krum",
+    "categoria": "Visitante",
+    "dia": "21/03/1957",
+    "hora_entrada": "18:30:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "10001",
+    "nome": "Minerva McGonagall ",
+    "categoria": "Professor",
+    "dia": "17/06/1983",
+    "hora_entrada": "19:44:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "0001",
+    "nome": "Tom Marvolo Riddle",
+    "categoria": "Suspeito",
+    "dia": "18/03/1924",
+    "hora_entrada": "09:56:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "0002",
+    "nome": "Bellatrix Rosier Black Lestrange",
+    "categoria": "Suspeito",
+    "dia": "18/03/1924",
+    "hora_entrada": "09:56:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023002",
+    "nome": "Hermione Jean Granger",
+    "categoria": "Aluno",
+    "dia": "14/02/1993",
+    "hora_entrada": "17:18:00",
+    "hora_saida": "18:00:00"
+  },
+  {
+    "codigo": "20002",
+    "nome": "Remus John Lupin",
+    "categoria": "Professor",
+    "dia": "17/06/1983",
+    "hora_entrada": "19:44:00",
+    "hora_saida": "22:00:00"
+  },
+  {
+    "codigo": "2023001",
+    "nome": "Harry James Potter",
+    "categoria": "Aluno",
+    "dia": "31/08/2017",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023002",
+    "nome": "Hermione Jean Granger",
+    "categoria": "Aluno",
+    "dia": "14/11/1958",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023001",
+    "nome": "Harry James Potter",
+    "categoria": "Aluno",
+    "dia": "14/11/1958",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023001",
+    "nome": "Harry James Potter",
+    "categoria": "Aluno",
+    "dia": "31/07/1924",
+    "hora_entrada": "11:03:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023002",
+    "nome": "Hermione Jean Granger",
+    "categoria": "Aluno",
+    "dia": "31/07/1924",
+    "hora_entrada": "11:03:00",
+    "hora_saida": "12:00:00"
+  },
+  {
+    "codigo": "2023002",
+    "nome": "Hermione Jean Granger",
+    "categoria": "Aluno",
+    "dia": "22/07/1972",
+    "hora_entrada": "07:30:00",
+    "hora_saida": "12:00:00"
+  }
+]
