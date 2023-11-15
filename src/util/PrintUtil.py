@@ -58,7 +58,7 @@ class PrintUtil:
         print()
 
     @staticmethod
-    def print_emergencia():
+    def print_emergencia(individuo):
         print()
         print(colored.stylize("Individuos em situação de perigo! Entrando em contato com as autoridades!", colored.bg("red") + colored.fg("white")))
         print()

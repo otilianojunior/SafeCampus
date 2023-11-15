@@ -167,8 +167,7 @@
             "tipo": "emergencia",
             "fotos": [
                 "src/assets/fotos/emergencia/emergencia.jpeg",
-                "src/assets/fotos/emergencia/emergencia(1).jpeg",
-                "src/assets/fotos/emergencia/emergencia(2).jpeg"
+                "src/assets/fotos/emergencia/emergencia(1).jpeg"
             ]
         }
 
