@@ -1,3 +1,4 @@
+import os
 import random
 from src.util.JsonUtil import JsonUtil
 from src.util.DateUtil import DateUtil
@@ -18,6 +19,7 @@ class SafeCampus:
         self.TEMPO_DETECCAO_INDIVIDUOS = None
         self.TEMPO_LIBERACAO_INDIVIDUOS = None
         self.fotos_portao = None
+        self.tentativa = 0
 
     def load_config(self):
         try:
@@ -39,13 +41,25 @@ class SafeCampus:
     def simular_entrada(self, fotos_portao):
         try:
             self.fotos_portao = fotos_portao
-            foto_entrada = {
-                "foto": random.choice(self.fotos_portao),
-                "hora_entrada": DateUtil().gerar_horario_entrada(),
-                "dia": DateUtil().gerar_data()
-            }
+
+            if self.tentativa == 0:
+                fotos_disponiveis = [foto for foto in self.fotos_portao if os.path.basename(foto) != 'foto_portao_6.jpeg']
+                foto_entrada = {
+                    "foto": random.choice(fotos_disponiveis),
+                    "hora_entrada": DateUtil().gerar_horario_entrada(),
+                    "dia": DateUtil().gerar_data(),
+                }
+
+            else:
+                foto_entrada = {
+                    "foto": random.choice(self.fotos_portao),
+                    "hora_entrada": DateUtil().gerar_horario_entrada(),
+                    "dia": DateUtil().gerar_data(),
+                }
+
             PrintUtil.print_foto_entrada(foto_entrada)
             return foto_entrada
+
         except Exception as ex:
             raise Exception('Erro: simular entrada', ex)
 

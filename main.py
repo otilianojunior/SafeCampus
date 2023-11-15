@@ -17,7 +17,7 @@ if __name__ == "__main__":
     visitantes = safe_campus.load_fotos(config.DIR_FOTOS_VISITANTES)
     emergencia = safe_campus.load_fotos(config.DIR_FOTOS_EMERGENCIA)
 
-    safe_campus.PROBABILIDADE_SAIDA = 60
+    safe_campus.PROBABILIDADE_SAIDA = 55
     safe_campus.TEMPO_MEDIO_PERMANENCIA = 60
     safe_campus.TEMPO_LIBERACAO_INDIVIDUOS = 60
     safe_campus.TEMPO_DETECCAO_INDIVIDUOS = 40

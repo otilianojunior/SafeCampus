@@ -52,3 +52,9 @@ pip install -r requirements.txt
 ```
 python3 main.py
 ```
+
+*OBS: caso tenha executado a main antes desse projeto é necessário atualizar os requirements.txt
+
+```
+pip install -r requirements.txt
+```
