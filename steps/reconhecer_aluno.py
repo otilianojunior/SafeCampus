@@ -3,7 +3,7 @@ from src.gate_campus.SafeCampus import SafeCampus
 from src.config.Configuration import Configuration
 
 
-@Given('o ambiente de reconhecimento do aluno esteja preparado')
+@Given('o ambiente de reconhecimento esta preparado')
 def given_ambiente_preparado_aluno(contexto):
     preparado, contexto.configuracao = SafeCampus().load_config()
 
@@ -20,6 +20,13 @@ def when_foto_capturada_aluno(contexto, foto):
 
 @Then('pelo menos, um Aluno deve ser reconhecido')
 def the_aluno_reconhecido(contexto):
-    ocorreram_reconhecimentos, contexto.alunos_reconhecidos = SafeCampus().reconhecer_alunos(contexto.foto_entrada, contexto.configuracao)
+    ocorreram_reconhecimentos, contexto.alunos_reconhecidos, contexto.individuos_registrados = SafeCampus().reconhecer_alunos(contexto.foto_entrada, contexto.configuracao)
 
     assert ocorreram_reconhecimentos is True
+
+
+@Then('Nenhum Aluno deve ser reconhecido')
+def nenhum_individuo_reconhecido(contexto):
+    ocorreram_reconhecimentos, contexto.aluno_nao_reconhecidos, contexto.individuos_registrados = SafeCampus().reconhecer_alunos(contexto.foto_entrada, contexto.configuracao)
+
+    assert contexto.aluno_nao_reconhecidos == []
