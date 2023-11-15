@@ -15,6 +15,7 @@ if __name__ == "__main__":
     professores = safe_campus.load_fotos(config.DIR_FOTOS_PROFESSORES)
     suspeitos = safe_campus.load_fotos(config.DIR_FOTOS_SUSPEITOS)
     visitantes = safe_campus.load_fotos(config.DIR_FOTOS_VISITANTES)
+    emergencia = safe_campus.load_fotos(config.DIR_FOTOS_EMERGENCIA)
 
     safe_campus.PROBABILIDADE_SAIDA = 55
     safe_campus.TEMPO_MEDIO_PERMANENCIA = 60
@@ -26,6 +27,7 @@ if __name__ == "__main__":
     ambiente_de_simulacao.process(safe_campus.reconhecer_professores(ambiente_de_simulacao, foto_entrada, configuracao))
     ambiente_de_simulacao.process(safe_campus.reconhecer_suspeitos(ambiente_de_simulacao, foto_entrada, configuracao))
     ambiente_de_simulacao.process(safe_campus.reconhecer_visitantes(ambiente_de_simulacao, foto_entrada, configuracao))
+    ambiente_de_simulacao.process(safe_campus.reconhecer_emergencia(ambiente_de_simulacao, foto_entrada, configuracao))
     ambiente_de_simulacao.process(safe_campus.simular_saida(ambiente_de_simulacao, configuracao))
 
     ambiente_de_simulacao.run(until=500)

@@ -11,13 +11,13 @@ class SafeCampus:
     def __init__(self):
         config = Configuration()
         self.dir_arquivo_configuracao = config.ARQUIVO_CONFIGURACAO
+        self.DIR_ARQUIVO_HORARIOS = config.ARQUIVO_HORARIOS
         self.individuos_registrados = {}
         self.PROBABILIDADE_SAIDA = None
         self.TEMPO_MEDIO_PERMANENCIA = None
         self.TEMPO_DETECCAO_INDIVIDUOS = None
         self.TEMPO_LIBERACAO_INDIVIDUOS = None
         self.fotos_portao = None
-        self.DIR_ARQUIVO_HORARIOS = config.ARQUIVO_HORARIOS
 
     def load_config(self):
         try:
@@ -52,7 +52,7 @@ class SafeCampus:
     def reconhecer_todas_categorias(self, ambiente_de_simulacao, foto_entrada, configuracao):
         resultados = []
 
-        categorias = ["alunos", "professores", "suspeitos", "visitantes"]
+        categorias = ["alunos", "professores", "suspeitos", "visitantes", "emergencia"]
 
         for categoria in categorias:
             resultados.extend(list(getattr(self, f'reconhecer_{categoria}')(ambiente_de_simulacao, foto_entrada, configuracao)))
@@ -78,6 +78,11 @@ class SafeCampus:
         reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
         print_function = PrintUtil.print_visitantes
         yield from reconhecedor.reconhecer_individuos(ambiente_de_simulacao, foto_entrada, configuracao, "visitantes", print_function)
+
+    def reconhecer_emergencia(self, ambiente_de_simulacao, foto_entrada, configuracao):
+        reconhecedor = Reconhecedor(self.individuos_registrados, self.TEMPO_MEDIO_PERMANENCIA, self.TEMPO_DETECCAO_INDIVIDUOS, self.PROBABILIDADE_SAIDA)
+        print_function = PrintUtil.print_emergencia
+        yield from reconhecedor.reconhecer_emergencia_total(ambiente_de_simulacao, foto_entrada, configuracao, print_function)
 
     def simular_saida(self, ambiente_de_simulacao, configuracao):
         while True:

@@ -9,7 +9,6 @@ class PrintUtil:
         print(colored.stylize(f"Foto da Entrada: {nome_arquivo}, Dia: {foto_entrada['dia']} e Hora: {foto_entrada['hora_entrada']}", colored.bg("yellow") + colored.fg("black")))
         print()
 
-
     @staticmethod
     def print_alunos(alunos):
         print(colored.stylize("Aluno reconhecido:", colored.bg("yellow") + colored.fg("black")))
@@ -20,7 +19,6 @@ class PrintUtil:
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
-
         print()
 
     @staticmethod
@@ -33,7 +31,6 @@ class PrintUtil:
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
-
         print()
 
     @staticmethod
@@ -46,7 +43,6 @@ class PrintUtil:
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
-
         print()
 
     @staticmethod
@@ -59,10 +55,17 @@ class PrintUtil:
                 chave = colored.stylize(chave, colored.fg("blue"))
                 valor = colored.stylize(valor, colored.fg("green"))
                 print(f"{chave}: {valor}")
+        print()
 
+    @staticmethod
+    def print_emergencia():
+        print()
+        print(colored.stylize("Individuos em situação de perigo! Entrando em contato com as autoridades!", colored.bg("red") + colored.fg("white")))
         print()
 
     @staticmethod
     def print_saida(individuo):
         print(colored.stylize(f"O(A) {individuo['tipo']}(a), {individuo['nome']} saiu às {individuo['hora_saida']} do dia {individuo['dia']}", colored.bg("green") + colored.fg("white")))
         print()
+
+

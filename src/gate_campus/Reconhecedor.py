@@ -60,6 +60,14 @@ class Reconhecedor:
                 break
         return reconhecido_previamente
 
+    def reconhecer_emergencia_total(self, ambiente_de_simulacao, foto_entrada, configuracao, print_function):
+        print("Tentando reconhecer emergência no portão...")
+        ocorreram_reconhecimentos, individuos = self.reconhecer_individuos_aux(foto_entrada, configuracao, "emergencia")
+
+        if ocorreram_reconhecimentos:
+            print_function()
+            yield ambiente_de_simulacao.timeout(self.TEMPO_DETECCAO_INDIVIDUOS)
+
     def carregar_caracteristicas_rosto(self, foto_entrada):
         foto_individuo = facerec.load_image_file(foto_entrada["foto"])
         caracteristicas_visitante = facerec.face_encodings(foto_individuo)

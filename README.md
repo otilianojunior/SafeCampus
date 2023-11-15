@@ -9,9 +9,9 @@
 
 ### Funcionalidade :clipboard:
 - <p align="justify">Reconhecimento Facial Multifacetado: Efetivamente identifica e reconhece as faces de múltiplos indivíduos simultaneamente.</p>
-- <p align="justify">Registro de Presença: Registro do horário de entrada e saída de cada pessoa.</p>
-- <p align="justify">Rastreamento de Visitantes: Verificação de indivíduos com histórico ou características suspeitas. </p>
-- <p align="justify">Alertas de Emergência: Este processo monitora o rosto das pessoas que estão saindo ou entrando para analisar estado de emergência.</p>
+- <p align="justify">Reconhecimento de Indivíduos: Sejam eles Alunos, Professores, Suspeitos e Visitantes.</p>
+- <p align="justify">Registro de Presença: Registra o horarário de entrada e saída de cada indivíduo. </p>
+- <p align="justify">Alertas de Emergência: Analisa o estado das pessoas que estão e saindo para saber se estão em uma emergência.</p>
 
 
 ### Como Rodar a Aplicação :arrow_forward:
@@ -45,7 +45,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-<p align="justify">Crie seu arquivo .env seguindo o exemplo do .env.example. </p>
+<p align="justify">Crie seu arquivo .env copiando o conteúdo do arquivo .env.example, lembre-se que se suas fotos estiverem  em outro diretório será necessário fazer alterações nesses caminhos. </p>
 
 <p align="justify">E por fim execute o arquivo main.py na raiz do projeto:</p>
 
